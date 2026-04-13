@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初代街头青年浮沉录 | 50-55岁赣湘粤桂叛逆一代的30年命运纪实</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #f59e0b;
+            --primary-dark: #d97706;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a2e 50%, var(--bg-dark) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), #fb923c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-logo svg {
+            width: 28px;
+            height: 28px;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .nav-link {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-link:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+        
+        .nav-link.active {
+            background: var(--primary);
+            color: var(--bg-dark);
+        }
+        
+        .nav-link svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 1.5rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            bottom: 25%;
+            right: 25%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(251, 146, 60, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite 1s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 900px;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .hero-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .hero-tag svg {
+            width: 18px;
+            height: 18px;
+            color: var(--primary);
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), #fb923c);
+            color: var(--bg-dark);
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+        }
+        
+        .hero-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(245, 158, 11, 0.4);
+        }
+        
+        .hero-cta svg {
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+        
+        /* 通用区块样式 */
+        .section {
+            padding: 5rem 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), #fb923c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* 时代背景卡片 */
+        .era-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .era-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .era-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .era-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .era-icon svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+        
+        .era-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .era-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        /* 图表区域 */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+        
+        .chart-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-header svg {
+            width: 20px;
+            height: 20px;
+            color: var(--primary);
+        }
+        
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        .chart-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        /* 地区特征卡片 */
+        .region-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .region-card {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .region-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .region-card.jiangxi { border-left-color: var(--success); }
+        .region-card.hunan { border-left-color: var(--warning); }
+        .region-card.guangdong { border-left-color: var(--info); }
+        .region-card.guangxi { border-left-color: var(--danger); }
+        
+        .region-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .region-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .jiangxi .region-icon { background: rgba(16, 185, 129, 0.2); }
+        .jiangxi .region-icon svg { color: var(--success); }
+        .hunan .region-icon { background: rgba(245, 158, 11, 0.2); }
+        .hunan .region-icon svg { color: var(--warning); }
+        .guangdong .region-icon { background: rgba(59, 130, 246, 0.2); }
+        .guangdong .region-icon svg { color: var(--info); }
+        .guangxi .region-icon { background: rgba(239, 68, 68, 0.2); }
+        .guangxi .region-icon svg { color: var(--danger); }
+        
+        .region-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .region-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        .region-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .region-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+        
+        .region-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        .region-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        /* 人物故事卡片 */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .story-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .story-header-bar {
+            height: 4px;
+        }
+        
+        .story-content {
+            padding: 1.5rem;
+        }
+        
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .story-avatar {
+            font-size: 2.5rem;
+        }
+        
+        .story-info h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        .story-meta {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        .story-badge {
+            margin-left: auto;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .story-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .story-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .story-keyword {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-card-hover);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        /* 时间线 */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), #ea580c);
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            padding: 0 2rem;
+        }
+        
+        .timeline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .timeline-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+        
+        .timeline-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+        
+        .timeline-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+            z-index: 1;
+        }
+        
+        .timeline-spacer {
+            flex: 1;
+        }
+        
+        /* 健康卡片 */
+        .health-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .health-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .health-region {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .health-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .health-score.good { color: var(--success); }
+        .health-score.medium { color: var(--warning); }
+        .health-score.bad { color: var(--danger); }
+        
+        .health-bar {
+            height: 8px;
+            background: var(--bg-card-hover);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+        
+        .health-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .health-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        /* 代际对照 */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .compare-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+        
+        .compare-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .compare-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .compare-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+        
+        .compare-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .compare-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        .compare-list {
+            list-style: none;
+        }
+        
+        .compare-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .compare-list li::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        
+        .compare-summary {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 146, 60, 0.1));
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .compare-summary p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .compare-summary .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .compare-summary .small {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        
+        /* 结语 */
+        .conclusion {
+            text-align: center;
+            padding: 5rem 1.5rem;
+            background: linear-gradient(to bottom, rgba(30, 41, 59, 0.3), var(--bg-dark));
+        }
+        
+        .conclusion-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            color: var(--primary);
+        }
+        
+        .conclusion-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .conclusion-text {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+        
+        .conclusion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .conclusion-item {
+            background: var(--bg-card);
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+        
+        .conclusion-item .label {
+            font-weight: 600;
+        }
+        
+        .conclusion-item .label.jiangxi { color: var(--success); }
+        .conclusion-item .label.hunan { color: var(--warning); }
+        .conclusion-item .label.guangdong { color: var(--info); }
+        .conclusion-item .label.guangxi { color: var(--danger); }
+        
+        .conclusion-quote {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .conclusion-quote p {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .conclusion-quote .final {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        
+        /* 页脚 */
+        .footer {
+            padding: 2rem 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(odd) {
+                flex-direction: row;
+            }
+            
+            .timeline-content {
+                padding-left: 3rem;
+                padding-right: 0;
+            }
+            
+            .timeline-spacer {
+                display: none;
+            }
+            
+            .timeline-dot {
+                position: absolute;
+                left: 12px;
+            }
+            
+            .timeline-card {
+                max-width: none;
+            }
+        }
+        
+        /* 移动端菜单 */
+        .mobile-menu {
+            display: none;
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .mobile-menu.open {
+            display: block;
+        }
+        
+        .mobile-menu .nav-link {
+            width: 100%;
+            justify-content: flex-start;
+            padding: 0.75rem 1rem;
+        }
+        
+        /* 内容区域切换 */
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        /* 进度条 */
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-label {
+            font-weight: 500;
+        }
+        
+        .progress-value {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-card-hover);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+                初代街头青年浮沉录
+            </div>
+            <div class="nav-links">
+                <div class="nav-link active" data-section="overview">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    总览
+                </div>
+                <div class="nav-link" data-section="regions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    地区分析
+                </div>
+                <div class="nav-link" data-section="stories">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    人物故事
+                </div>
+                <div class="nav-link" data-section="timeline">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    命运轨迹
+                </div>
+                <div class="nav-link" data-section="health">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                    健康
+                </div>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="nav-link active" data-section="overview">总览</div>
+            <div class="nav-link" data-section="regions">地区分析</div>
+            <div class="nav-link" data-section="stories">人物故事</div>
+            <div class="nav-link" data-section="timeline">命运轨迹</div>
+            <div class="nav-link" data-section="health">健康</div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">1971-1976年出生 · 2026年50-55岁 · 赣湘粤桂四省纪实</div>
+            <h1 class="hero-title">初代街头青年浮沉录</h1>
+            <p class="hero-subtitle">50-55岁赣湘粤桂叛逆一代的30年个人命运全纪实</p>
+            
+            <div class="hero-tags">
+                <div class="hero-tag">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                    </svg>
+                    追踪人群：1971-1976年出生
+                </div>
+                <div class="hero-tag">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    地域：江西、湖南、广东、广西
+                </div>
+                <div class="hero-tag">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    时间跨度：30年命运轨迹
+                </div>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-dot" style="background: #10b981;"></div>
+                    <div class="stat-value">50%</div>
+                    <div class="stat-label">安稳度日</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-dot" style="background: #f59e0b;"></div>
+                    <div class="stat-value">25%</div>
+                    <div class="stat-label">颠沛流离</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-dot" style="background: #3b82f6;"></div>
+                    <div class="stat-value">15%</div>
+                    <div class="stat-label">逆袭翻身</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-dot" style="background: #ef4444;"></div>
+                    <div class="stat-value">10%</div>
+                    <div class="stat-label">锒铛入狱</div>
+                </div>
+            </div>
+            
+            <button class="hero-cta" onclick="scrollToContent()">
+                开始探索
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- 时代背景 -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">时代底色</h2>
+            <p class="section-desc">1990-2000年，中国中部与南方正经历最剧烈的社会转型</p>
+        </div>
+        
+        <div class="era-grid">
+            <div class="era-card">
+                <div class="era-icon" style="background: linear-gradient(135deg, #ef4444, #f97316);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                </div>
+                <h3 class="era-title">国企改制</h3>
+                <p class="era-desc">铁饭碗打破，工人下岗潮席卷全国，传统就业观念被彻底颠覆</p>
+            </div>
+            <div class="era-card">
+                <div class="era-icon" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <h3 class="era-title">打工潮爆发</h3>
+                <p class="era-desc">农村青年涌向沿海，城乡撕裂加剧，人口大迁移改变无数命运</p>
+            </div>
+            <div class="era-card">
+                <div class="era-icon" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18V5l12-2v13"/>
+                        <circle cx="6" cy="18" r="3"/>
+                        <circle cx="18" cy="16" r="3"/>
+                    </svg>
+                </div>
+                <h3 class="era-title">港风古惑仔</h3>
+                <p class="era-desc">港片文化席卷乡镇，江湖义气成信仰，影响一代青年价值观</p>
+            </div>
+            <div class="era-card">
+                <div class="era-icon" style="background: linear-gradient(135deg, #f59e0b, #eab308);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                </div>
+                <h3 class="era-title">改装摩托</h3>
+                <p class="era-desc">嘉陵70、幸福250，炸街是青春宣言，飙车成为叛逆符号</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 总览部分 -->
+    <section class="section content-section active" id="overview">
+        <div class="section-header">
+            <h2 class="section-title">命运总览</h2>
+            <p class="section-desc">赣湘粤桂四省初代叛逆者中年命运分布</p>
+        </div>
+        
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="20" x2="12" y2="10"/>
+                        <line x1="18" y1="20" x2="18" y2="4"/>
+                        <line x1="6" y1="20" x2="6" y2="16"/>
+                    </svg>
+                    <h3 class="chart-title">命运分布总览</h3>
+                </div>
+                <p class="chart-subtitle">四省初代叛逆者中年命运占比</p>
+                <div class="chart-container">
+                    <canvas id="fateChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <div class="chart-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <h3 class="chart-title">地区命运对比</h3>
+                </div>
+                <p class="chart-subtitle">各地区不同命运类型占比对比</p>
+                <div class="chart-container">
+                    <canvas id="regionChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="region-grid">
+            <div class="region-card jiangxi">
+                <div class="region-header">
+                    <div class="region-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="region-title">江西：安分守己成主流</h3>
+                </div>
+                <p class="region-desc">民风偏保守，叛逆仅停留在"耍帅、逃课、飙车"，极少涉及恶性犯罪。中年后绝大多数回归平凡。</p>
+                <div class="region-stats">
+                    <div>
+                        <div class="region-stat-value" style="color: var(--success);">90%</div>
+                        <div class="region-stat-label">回乡率</div>
+                    </div>
+                    <div>
+                        <div class="region-stat-value" style="color: var(--success);">85%</div>
+                        <div class="region-stat-label">安稳度日</div>
+                    </div>
+                    <div>
+                        <div class="region-stat-value" style="color: var(--success);">&lt;5%</div>
+                        <div class="region-stat-label">涉黑涉毒</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="region-card hunan">
+                <div class="region-header">
+                    <div class="region-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="region-title">湖南：狠厉半生，悲喜两极</h3>
+                </div>
+                <p class="region-desc">民风彪悍，敢闯敢拼。命运呈现极端分化：要么逆袭成老板，要么颠沛流离，甚至入狱。</p>
+                <div class="region-stats">
+                    <div>
+                        <div class="region-stat-value" style="color: var(--info);">15%</div>
+                        <div class="region-stat-label">逆袭翻身</div>
+                    </div>
+                    <div>
+                        <div class="region-stat-value" style="color: var(--danger);">15%</div>
+                        <div class="region-stat-label">入狱率</div>
+                    </div>
+                    <div>
+                        <div class="region-stat-value" style="color: var(--warning);">12%</div>
+                        <div class="region-stat-label">残疾率</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="region-card guangdong">
+                <div class="region-header">
+                    <div class="region-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="region-title">广东：打工创业，逆袭者众多</h3>
+                </div>
+                <p class="region-desc">经济中心，叛逆青年多进厂、做生意。接触新鲜事物早，逆袭比例最高。</p>
+                <div class="region-stats">
+                    <div>
+                        <div class="region-stat-value" style="color: var(--info);">30%</div>
+                        <div class="region-stat-label">逆袭翻身</div>
+                    </div>
+                    <div>
+                        <div class="region-stat-value" style="color: var(--info);">25%</div>
+                        <div class="region-stat-label">创业成功</div>
+                    </div>
+                    <div>
+                        <div class="region-stat-value" style="color: var(--success);">40%</div>
+                        <div class="region-stat-label">安稳度日</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="region-card guangxi">
+                <div class="region-header">
+                    <div class="region-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="region-title">广西：颠沛流离，底层居多</h3>
+                </div>
+                <p class="region-desc">经济落后，叛逆青年多外出打工，少有逆袭。飙车、酒驾导致的残疾比例极高。</p>
+                <div class="region-stats">
+                    <div>
+                        <div class="region-stat-value" style="color: var(--danger);">45%</div>
+                        <div class="region-stat-label">颠沛流离</div>
+                    </div>
+                    <div>
+                        <div class="region-stat-value" style="color: var(--danger);">20%</div>
+                        <div class="region-stat-label">残疾率</div>
+                    </div>
+                    <div>
+                        <div class="region-stat-value" style="color: var(--warning);">10%</div>
+                        <div class="region-stat-label">逆袭翻身</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 地区分析 -->
+    <section class="section content-section" id="regions">
+        <div class="section-header">
+            <h2 class="section-title">地区深度分析</h2>
+            <p class="section-desc">各地区群体性格特点与命运轨迹</p>
+        </div>
+        
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                        <polyline points="2 17 12 22 22 17"/>
+                        <polyline points="2 12 12 17 22 12"/>
+                    </svg>
+                    <h3 class="chart-title">地区性格特征对比</h3>
+                </div>
+                <p class="chart-subtitle">各地区群体性格特点雷达图</p>
+                <div class="chart-container">
+                    <canvas id="characterChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <div class="chart-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10"/>
+                        <line x1="12" y1="20" x2="12" y2="4"/>
+                        <line x1="6" y1="20" x2="6" y2="14"/>
+                    </svg>
+                    <h3 class="chart-title">命运类型分布</h3>
+                </div>
+                <p class="chart-subtitle">各地区不同命运类型占比</p>
+                <div class="chart-container">
+                    <canvas id="fateTypeChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 人物故事 -->
+    <section class="section content-section" id="stories">
+        <div class="section-header">
+            <h2 class="section-title">人物故事</h2>
+            <p class="section-desc">真实可追溯的个体沉浮，每个人都是时代的缩影</p>
+        </div>
+        
+        <div class="stories-grid">
+            <div class="story-card">
+                <div class="story-header-bar" style="background: #10b981;"></div>
+                <div class="story-content">
+                    <div class="story-header">
+                        <div class="story-avatar">👨‍🔧</div>
+                        <div class="story-info">
+                            <h3>李建国</h3>
+                            <div class="story-meta">53岁 · 江西赣州</div>
+                        </div>
+                        <span class="story-badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">安稳度日</span>
+                    </div>
+                    <p class="story-text">少年时是乡镇知名"飙车党"，骑改装嘉陵，天天炸街。19岁去东莞电子厂打工28年，从普工做到组长。如今在南康老家盖了三层小楼，安稳度日。</p>
+                    <div class="story-keywords">
+                        <span class="story-keyword">打工半生</span>
+                        <span class="story-keyword">回乡守家</span>
+                        <span class="story-keyword">职业病</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="story-card">
+                <div class="story-header-bar" style="background: #3b82f6;"></div>
+                <div class="story-content">
+                    <div class="story-header">
+                        <div class="story-avatar">👨‍💼</div>
+                        <div class="story-info">
+                            <h3>王强</h3>
+                            <div class="story-meta">55岁 · 湖南郴州</div>
+                        </div>
+                        <span class="story-badge" style="background: rgba(59, 130, 246, 0.2); color: #3b82f6;">逆袭翻身</span>
+                    </div>
+                    <p class="story-text">当年桂阳县城"一霸"，20岁因抢劫被判7年。出狱后去广州做物流，靠能吃苦、讲义气，做到物流公司老板。如今身家千万，儿女留学海外。</p>
+                    <div class="story-keywords">
+                        <span class="story-keyword">坐牢7年</span>
+                        <span class="story-keyword">物流老板</span>
+                        <span class="story-keyword">身家千万</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="story-card">
+                <div class="story-header-bar" style="background: #10b981;"></div>
+                <div class="story-content">
+                    <div class="story-header">
+                        <div class="story-avatar">👩</div>
+                        <div class="story-info">
+                            <h3>刘梅</h3>
+                            <div class="story-meta">51岁 · 江西信丰</div>
+                        </div>
+                        <span class="story-badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">安稳度日</span>
+                    </div>
+                    <p class="story-text">当年的"小太妹"，17岁未婚先孕被赶出家门。独自带女儿生活，在服装厂做车工30年，把女儿供到大学毕业。如今开小裁缝店，守着外孙。</p>
+                    <div class="story-keywords">
+                        <span class="story-keyword">未婚先孕</span>
+                        <span class="story-keyword">独自养女</span>
+                        <span class="story-keyword">赎罪隐忍</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="story-card">
+                <div class="story-header-bar" style="background: #f59e0b;"></div>
+                <div class="story-content">
+                    <div class="story-header">
+                        <div class="story-avatar">👨‍🦽</div>
+                        <div class="story-info">
+                            <h3>吴浩</h3>
+                            <div class="story-meta">54岁 · 湖南湘潭</div>
+                        </div>
+                        <span class="story-badge" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">颠沛流离</span>
+                    </div>
+                    <p class="story-text">当年的飙车党头目，25岁因车祸双腿残疾，从此一蹶不振。一生未娶，靠低保生活，每天坐轮椅晒太阳，看着当年兄弟成家立业，只剩悔恨。</p>
+                    <div class="story-keywords">
+                        <span class="story-keyword">车祸残疾</span>
+                        <span class="story-keyword">一生未娶</span>
+                        <span class="story-keyword">低保生活</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="story-card">
+                <div class="story-header-bar" style="background: #3b82f6;"></div>
+                <div class="story-content">
+                    <div class="story-header">
+                        <div class="story-avatar">👨‍🏭</div>
+                        <div class="story-info">
+                            <h3>陈桂生</h3>
+                            <div class="story-meta">54岁 · 广东东莞</div>
+                        </div>
+                        <span class="story-badge" style="background: rgba(59, 130, 246, 0.2); color: #3b82f6;">逆袭翻身</span>
+                    </div>
+                    <p class="story-text">当年东莞乡镇飙车党，初中辍学。18岁进工厂学模具技术，后来自己开模具厂。如今身家千万，是当年混混里最成功的一个。</p>
+                    <div class="story-keywords">
+                        <span class="story-keyword">模具厂老板</span>
+                        <span class="story-keyword">技术起家</span>
+                        <span class="story-keyword">身家千万</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="story-card">
+                <div class="story-header-bar" style="background: #f59e0b;"></div>
+                <div class="story-content">
+                    <div class="story-header">
+                        <div class="story-avatar">👴</div>
+                        <div class="story-info">
+                            <h3>黄勇</h3>
+                            <div class="story-meta">55岁 · 广西北流</div>
+                        </div>
+                        <span class="story-badge" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">颠沛流离</span>
+                    </div>
+                    <p class="story-text">当年北流"鬼火原型"头目，20岁因酒驾撞人被判5年。出狱后打零工、搬砖、送水，一生未娶，如今靠低保生活，一身伤病。</p>
+                    <div class="story-keywords">
+                        <span class="story-keyword">酒驾入狱</span>
+                        <span class="story-keyword">打零工</span>
+                        <span class="story-keyword">低保度日</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 命运轨迹 -->
+    <section class="section content-section" id="timeline">
+        <div class="section-header">
+            <h2 class="section-title">命运轨迹</h2>
+            <p class="section-desc">从叛逆少年到知天命之年的人生轨迹</p>
+        </div>
+        
+        <div class="chart-card" style="margin-bottom: 3rem;">
+            <div class="chart-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+                <h3 class="chart-title">人生阶段行为变化</h3>
+            </div>
+            <p class="chart-subtitle">不同年龄段主要行为/状态占比变化</p>
+            <div class="chart-container" style="height: 350px;">
+                <canvas id="timelineChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-card">
+                        <span class="timeline-badge" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            15-20岁
+                        </span>
+                        <h3 class="timeline-title">叛逆期</h3>
+                        <p class="timeline-desc">飙车、打架、早恋、混社会，不是坏，是迷茫。用极端的方式寻找存在感。</p>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-spacer"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-card">
+                        <span class="timeline-badge" style="background: rgba(249, 115, 22, 0.2); color: #f97316;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="20" x2="12" y2="10"/>
+                                <line x1="18" y1="20" x2="18" y2="4"/>
+                                <line x1="6" y1="20" x2="6" y2="16"/>
+                            </svg>
+                            20-30岁
+                        </span>
+                        <h3 class="timeline-title">抉择期</h3>
+                        <p class="timeline-desc">安分者南下进厂、回乡务农；冲动者涉黑、抢劫、酒驾；幸运者抓住时代红利创业。</p>
+                    </div>
+                </div>
+                <div class="timeline-dot" style="background: #f97316;"></div>
+                <div class="timeline-spacer"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-card">
+                        <span class="timeline-badge" style="background: rgba(234, 179, 8, 0.2); color: #eab308;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            </svg>
+                            30-40岁
+                        </span>
+                        <h3 class="timeline-title">奋斗期</h3>
+                        <p class="timeline-desc">有人踏实过日子，有人付出牢狱、残疾代价，有人完成阶层跨越。</p>
+                    </div>
+                </div>
+                <div class="timeline-dot" style="background: #eab308;"></div>
+                <div class="timeline-spacer"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-card">
+                        <span class="timeline-badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                            40-50岁
+                        </span>
+                        <h3 class="timeline-title">稳定期</h3>
+                        <p class="timeline-desc">成功者用财富弥补荒唐，平凡者守着家庭，落魄者带着伤病悔恨。</p>
+                    </div>
+                </div>
+                <div class="timeline-dot" style="background: #10b981;"></div>
+                <div class="timeline-spacer"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-card">
+                        <span class="timeline-badge" style="background: rgba(59, 130, 246, 0.2); color: #3b82f6;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                            50-55岁
+                        </span>
+                        <h3 class="timeline-title">知天命</h3>
+                        <p class="timeline-desc">所有人都放下了当年的嚣张，最大的共识：当年的叛逆没有意义，安稳才是终极答案。</p>
+                    </div>
+                </div>
+                <div class="timeline-dot" style="background: #3b82f6;"></div>
+                <div class="timeline-spacer"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 健康状况 -->
+    <section class="section content-section" id="health">
+        <div class="section-header">
+            <h2 class="section-title">健康状况</h2>
+            <p class="section-desc">半生透支，晚年多病——长期体力劳动、飙车受伤、烟酒过度的代价</p>
+        </div>
+        
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                    <h3 class="chart-title">各地区慢性病分布</h3>
+                </div>
+                <p class="chart-subtitle">长期体力劳动导致的健康问题占比</p>
+                <div class="chart-container">
+                    <canvas id="healthChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <div class="chart-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    <h3 class="chart-title">健康问题成因</h3>
+                </div>
+                <p class="chart-subtitle">主要健康问题的形成原因</p>
+                <div style="padding: 1rem 0;">
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">腰椎病</span>
+                            <span class="progress-value">65%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%; background: #f59e0b;"></div>
+                        </div>
+                        <p class="progress-desc">流水线久站、搬运重物</p>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">胃病</span>
+                            <span class="progress-value">55%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 55%; background: #ef4444;"></div>
+                        </div>
+                        <p class="progress-desc">饮食不规律、熬夜打工</p>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">关节炎</span>
+                            <span class="progress-value">45%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%; background: #3b82f6;"></div>
+                        </div>
+                        <p class="progress-desc">潮湿环境、体力劳动</p>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">高血压</span>
+                            <span class="progress-value">40%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%; background: #8b5cf6;"></div>
+                        </div>
+                        <p class="progress-desc">烟酒过度、精神压力</p>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">残疾</span>
+                            <span class="progress-value">12%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 12%; background: #ec4899;"></div>
+                        </div>
+                        <p class="progress-desc">飙车事故、打架斗殴</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="health-grid">
+            <div class="health-card">
+                <div class="health-region">江西</div>
+                <div class="health-score good">75</div>
+                <div class="health-bar">
+                    <div class="health-bar-fill" style="width: 75%; background: #10b981;"></div>
+                </div>
+                <div class="health-desc">慢性病为主，残疾率最低</div>
+            </div>
+            <div class="health-card">
+                <div class="health-region">湖南</div>
+                <div class="health-score medium">60</div>
+                <div class="health-bar">
+                    <div class="health-bar-fill" style="width: 60%; background: #f59e0b;"></div>
+                </div>
+                <div class="health-desc">残疾率较高，打架斗殴遗留</div>
+            </div>
+            <div class="health-card">
+                <div class="health-region">广东</div>
+                <div class="health-score good">70</div>
+                <div class="health-bar">
+                    <div class="health-bar-fill" style="width: 70%; background: #3b82f6;"></div>
+                </div>
+                <div class="health-desc">相对较好，医疗条件好</div>
+            </div>
+            <div class="health-card">
+                <div class="health-region">广西</div>
+                <div class="health-score bad">50</div>
+                <div class="health-bar">
+                    <div class="health-bar-fill" style="width: 50%; background: #ef4444;"></div>
+                </div>
+                <div class="health-desc">最差，飙车事故遗留多</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 代际对照 -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">代际对照</h2>
+            <p class="section-desc">从初代叛逆到当代鬼火少年，命运的轮回</p>
+        </div>
+        
+        <div class="compare-grid">
+            <div class="compare-card">
+                <div class="compare-header">
+                    <div class="compare-icon" style="background: rgba(245, 158, 11, 0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="compare-title">初代叛逆者</h3>
+                        <p class="compare-subtitle">1971-1976年出生</p>
+                    </div>
+                </div>
+                <ul class="compare-list">
+                    <li>骑嘉陵70、幸福250改装摩托</li>
+                    <li>染黄发、涂艳色口红</li>
+                    <li>没有网络、没有曝光</li>
+                    <li>默默活了半生，无人知晓</li>
+                </ul>
+            </div>
+            
+            <div class="compare-card">
+                <div class="compare-header">
+                    <div class="compare-icon" style="background: rgba(59, 130, 246, 0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="compare-title">当代鬼火少年</h3>
+                        <p class="compare-subtitle">2000年后出生</p>
+                    </div>
+                </div>
+                <ul class="compare-list">
+                    <li>骑鬼火摩托、改装电动车</li>
+                    <li>网红妆容、短视频曝光</li>
+                    <li>有网络、有更多关注</li>
+                    <li>本质是同一个群体的轮回</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="compare-summary">
+            <p><span class="highlight">同样的乡镇出身、辍学、迷茫</span></p>
+            <p>同样的用叛逆换取存在感，同样的缺乏家庭引导、社会关注</p>
+            <p class="small">底层青少年的叛逆，从来不是"坏"，是"无路可走"</p>
+        </div>
+    </section>
+
+    <!-- 结语 -->
+    <section class="conclusion">
+        <svg class="conclusion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+        </svg>
+        <h2 class="conclusion-title">他们的人生，是时代的注脚</h2>
+        
+        <p class="conclusion-text">
+            50-55岁，赣湘粤桂，当年的街头少年、小太妹，如今都已白发渐生。
+        </p>
+        
+        <div class="conclusion-grid">
+            <div class="conclusion-item">
+                <span class="label jiangxi">江西人</span> 守着乡土，安稳度日
+            </div>
+            <div class="conclusion-item">
+                <span class="label hunan">湖南人</span> 闯过江湖，悲喜自知
+            </div>
+            <div class="conclusion-item">
+                <span class="label guangdong">广东人</span> 抓住机遇，逆袭翻身
+            </div>
+            <div class="conclusion-item">
+                <span class="label guangxi">广西人</span> 颠沛半生，底层求生
+            </div>
+        </div>
+        
+        <p class="conclusion-text" style="margin-bottom: 2rem;">
+            他们的命运，没有惊天动地的传奇，只有柴米油盐的平凡、半生颠沛的无奈、晚年安稳的渴望。<br>
+            他们是中国社会转型期，被忽略的一代，也是最坚韧的一代。
+        </p>
+        
+        <div class="conclusion-quote">
+            <p>"当年的炸街声早已远去，当年的兄弟情义只剩回忆，当年的嚣张轻狂化为平淡。</p>
+            <p>如今的他们，只是父亲、母亲、爷爷、奶奶，</p>
+            <p>只是在菜市场买菜、在工地干活、在小店看店的普通中年人。"</p>
+            <div style="border-top: 1px solid #334155; margin: 1.5rem 0;"></div>
+            <p class="final">这就是50-55岁，中部江西、湖南，南方两广，<br>初代鬼火少年、精神小妹的最终命运：<br>归于平凡，隐于烟火</p>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>初代街头青年浮沉录 · 50-55岁赣湘粤桂叛逆一代的30年个人命运全纪实</p>
+        <p style="margin-top: 0.5rem;">数据来源：真实可追溯的个体命运记录</p>
+    </footer>
+
+    <script>
+        // 导航滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // 移动端菜单
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('open');
+        }
+        
+        // 内容区域切换
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const section = this.dataset.section;
+                if (!section) return;
+                
+                // 更新导航状态
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll(`.nav-link[data-section="${section}"]`).forEach(l => l.classList.add('active'));
+                
+                // 切换内容区域
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                document.getElementById(section).classList.add('active');
+                
+                // 关闭移动端菜单
+                document.getElementById('mobileMenu').classList.remove('open');
+                
+                // 滚动到内容区域
+                document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        function scrollToContent() {
+            document.getElementById('overview').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 图表配置
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = '#334155';
+        
+        // 命运分布饼图
+        new Chart(document.getElementById('fateChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['安稳度日', '颠沛流离', '逆袭翻身', '锒铛入狱'],
+                datasets: [{
+                    data: [50, 25, 15, 10],
+                    backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 地区命运对比图
+        new Chart(document.getElementById('regionChart'), {
+            type: 'bar',
+            data: {
+                labels: ['江西', '湖南', '广东', '广西'],
+                datasets: [
+                    { label: '安稳度日', data: [85, 45, 40, 30], backgroundColor: '#10b981' },
+                    { label: '逆袭翻身', data: [2, 15, 30, 10], backgroundColor: '#3b82f6' },
+                    { label: '颠沛流离', data: [10, 25, 20, 45], backgroundColor: '#f59e0b' },
+                    { label: '入狱', data: [3, 15, 10, 15], backgroundColor: '#ef4444' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: { stacked: true, grid: { color: '#1e293b' } },
+                    y: { stacked: true, grid: { display: false } }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 15, usePointStyle: true }
+                    }
+                }
+            }
+        });
+        
+        // 性格特征雷达图
+        new Chart(document.getElementById('characterChart'), {
+            type: 'radar',
+            data: {
+                labels: ['保守', '务实', '重情义', '安分', '闯劲'],
+                datasets: [
+                    { label: '江西', data: [90, 85, 80, 95, 40], borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.2)', pointBackgroundColor: '#10b981' },
+                    { label: '湖南', data: [40, 60, 90, 30, 95], borderColor: '#f59e0b', backgroundColor: 'rgba(245, 158, 11, 0.2)', pointBackgroundColor: '#f59e0b' },
+                    { label: '广东', data: [50, 80, 70, 45, 85], borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.2)', pointBackgroundColor: '#3b82f6' },
+                    { label: '广西', data: [55, 50, 75, 50, 70], borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.2)', pointBackgroundColor: '#ef4444' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: '#334155' },
+                        grid: { color: '#334155' },
+                        pointLabels: { color: '#94a3b8' },
+                        ticks: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 15, usePointStyle: true }
+                    }
+                }
+            }
+        });
+        
+        // 命运类型分布图
+        new Chart(document.getElementById('fateTypeChart'), {
+            type: 'bar',
+            data: {
+                labels: ['江西', '湖南', '广东', '广西'],
+                datasets: [
+                    { label: '安稳度日', data: [85, 45, 40, 30], backgroundColor: '#10b981', borderRadius: 4 },
+                    { label: '逆袭翻身', data: [2, 15, 30, 10], backgroundColor: '#3b82f6', borderRadius: 4 },
+                    { label: '颠沛流离', data: [10, 25, 20, 45], backgroundColor: '#f59e0b', borderRadius: 4 },
+                    { label: '入狱', data: [3, 15, 10, 15], backgroundColor: '#ef4444', borderRadius: 4 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: '#1e293b' } }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 15, usePointStyle: true }
+                    }
+                }
+            }
+        });
+        
+        // 人生轨迹图
+        new Chart(document.getElementById('timelineChart'), {
+            type: 'line',
+            data: {
+                labels: ['15-20岁', '20-30岁', '30-40岁', '40-50岁', '50-55岁'],
+                datasets: [
+                    { label: '飙车/叛逆', data: [80, 20, 5, 2, 0], borderColor: '#f59e0b', backgroundColor: 'transparent', tension: 0.4, pointRadius: 6, pointBackgroundColor: '#f59e0b' },
+                    { label: '打工/务工', data: [10, 70, 75, 60, 50], borderColor: '#3b82f6', backgroundColor: 'transparent', tension: 0.4, pointRadius: 6, pointBackgroundColor: '#3b82f6' },
+                    { label: '安稳生活', data: [5, 30, 50, 65, 80], borderColor: '#10b981', backgroundColor: 'transparent', tension: 0.4, pointRadius: 6, pointBackgroundColor: '#10b981' },
+                    { label: '病痛困扰', data: [2, 10, 25, 45, 55], borderColor: '#ef4444', backgroundColor: 'transparent', tension: 0.4, pointRadius: 6, pointBackgroundColor: '#ef4444' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: '#1e293b' }, max: 100 }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 15, usePointStyle: true }
+                    }
+                }
+            }
+        });
+        
+        // 健康状况图
+        new Chart(document.getElementById('healthChart'), {
+            type: 'bar',
+            data: {
+                labels: ['江西', '湖南', '广东', '广西'],
+                datasets: [
+                    { label: '腰椎病', data: [65, 60, 55, 70], backgroundColor: '#f59e0b', borderRadius: 4 },
+                    { label: '胃病', data: [55, 50, 45, 60], backgroundColor: '#ef4444', borderRadius: 4 },
+                    { label: '关节炎', data: [40, 45, 35, 55], backgroundColor: '#3b82f6', borderRadius: 4 },
+                    { label: '高血压', data: [35, 40, 30, 45], backgroundColor: '#8b5cf6', borderRadius: 4 },
+                    { label: '残疾', data: [5, 15, 10, 20], backgroundColor: '#ec4899', borderRadius: 4 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: '#1e293b' } }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 15, usePointStyle: true }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
