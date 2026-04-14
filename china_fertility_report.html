@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中国生育成本报告 2024版 · 育娲人口研究</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg: #0c1018;
+    --bg2: #111720;
+    --bg3: #161e2a;
+    --card: #1a2233;
+    --border: #253047;
+    --amber: #f5a623;
+    --red: #e8534a;
+    --teal: #2ec4b6;
+    --blue: #4a90d9;
+    --green: #52c97e;
+    --text: #e8edf4;
+    --text2: #8fa3bb;
+    --text3: #5d7390;
+    --accent: #f5a623;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(12,16,24,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 56px;
+  }
+  .nav-brand { font-family: 'Noto Serif SC', serif; font-weight: 700; font-size: 14px; color: var(--amber); letter-spacing: 2px; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--text2); text-decoration: none; font-size: 13px; transition: color .2s; }
+  .nav-links a:hover { color: var(--amber); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(245,166,35,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(78,144,217,0.06) 0%, transparent 50%);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(245,166,35,0.12);
+    border: 1px solid rgba(245,166,35,0.3);
+    color: var(--amber);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+    animation: fadeUp .6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    animation: fadeUp .6s .1s ease both;
+  }
+  .hero h1 span { color: var(--amber); }
+  .hero-sub {
+    max-width: 600px;
+    color: var(--text2);
+    font-size: 16px;
+    margin-top: 20px;
+    line-height: 1.8;
+    animation: fadeUp .6s .2s ease both;
+  }
+  .hero-authors {
+    margin-top: 28px;
+    font-size: 13px;
+    color: var(--text3);
+    animation: fadeUp .6s .3s ease both;
+  }
+  .hero-authors span { color: var(--text2); }
+
+  /* ALERT BANNER */
+  .alert {
+    margin-top: 48px;
+    background: rgba(232,83,74,0.1);
+    border-left: 3px solid var(--red);
+    padding: 16px 20px;
+    border-radius: 0 6px 6px 0;
+    max-width: 700px;
+    animation: fadeUp .6s .4s ease both;
+  }
+  .alert strong { color: var(--red); font-size: 14px; }
+  .alert p { color: var(--text2); font-size: 13px; margin-top: 4px; }
+
+  /* HERO STATS ROW */
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 60px; flex-wrap: wrap;
+    animation: fadeUp .6s .5s ease both;
+  }
+  .hero-stat { border-left: 2px solid var(--border); padding-left: 20px; }
+  .hero-stat .num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 36px; font-weight: 900;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .hero-stat .unit { font-size: 16px; color: var(--text2); }
+  .hero-stat .label { font-size: 12px; color: var(--text3); margin-top: 4px; letter-spacing: 1px; }
+
+  /* SCROLL INDICATOR */
+  .scroll-ind {
+    position: absolute; bottom: 40px; left: 60px;
+    display: flex; align-items: center; gap: 10px;
+    color: var(--text3); font-size: 11px; letter-spacing: 2px;
+    animation: fadeUp .6s .7s ease both;
+  }
+  .scroll-line { width: 40px; height: 1px; background: var(--border); }
+
+  /* SECTIONS */
+  section { padding: 80px 60px; border-top: 1px solid var(--border); }
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 4px;
+    color: var(--amber); text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .section-desc { color: var(--text2); font-size: 14px; max-width: 700px; line-height: 1.8; margin-bottom: 40px; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+
+  /* CARD */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    transition: border-color .2s, transform .2s;
+  }
+  .card:hover { border-color: rgba(245,166,35,0.3); transform: translateY(-2px); }
+  .card-label { font-size: 11px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .card-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 32px; font-weight: 900; color: var(--amber);
+    line-height: 1;
+  }
+  .card-unit { font-size: 15px; color: var(--text2); }
+  .card-desc { font-size: 12px; color: var(--text3); margin-top: 8px; }
+  .card-compare { margin-top: 12px; font-size: 12px; color: var(--text2); }
+  .card-compare .up { color: var(--red); }
+  .card-compare .down { color: var(--green); }
+
+  /* BIG NUMBER CARDS */
+  .big-card {
+    background: linear-gradient(135deg, var(--card), var(--bg3));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .big-card::after {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(245,166,35,0.06);
+  }
+  .big-card .num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 48px; font-weight: 900;
+    line-height: 1;
+  }
+  .big-card .num.amber { color: var(--amber); }
+  .big-card .num.red { color: var(--red); }
+  .big-card .num.teal { color: var(--teal); }
+  .big-card .num.blue { color: var(--blue); }
+  .big-card .title { font-size: 13px; color: var(--text2); margin-top: 10px; }
+  .big-card .sub { font-size: 11px; color: var(--text3); margin-top: 6px; }
+
+  /* BAR CHART CUSTOM */
+  .bar-item { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .bar-item .blabel { font-size: 12px; color: var(--text2); width: 90px; flex-shrink: 0; text-align: right; }
+  .bar-wrap { flex: 1; background: rgba(255,255,255,0.04); border-radius: 3px; height: 24px; position: relative; overflow: hidden; }
+  .bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 11px; font-weight: 700; color: #fff;
+    transition: width 1.5s cubic-bezier(0.25,1,0.5,1);
+    width: 0;
+  }
+  .bar-fill.amber { background: linear-gradient(90deg, rgba(245,166,35,0.4), var(--amber)); }
+  .bar-fill.red { background: linear-gradient(90deg, rgba(232,83,74,0.4), var(--red)); }
+  .bar-fill.teal { background: linear-gradient(90deg, rgba(46,196,182,0.4), var(--teal)); }
+  .bar-fill.blue { background: linear-gradient(90deg, rgba(74,144,217,0.4), var(--blue)); }
+  .bar-fill.green { background: linear-gradient(90deg, rgba(82,201,126,0.4), var(--green)); }
+
+  /* PROVINCE TABLE */
+  .province-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .province-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: border-color .2s;
+  }
+  .province-item:hover { border-color: rgba(245,166,35,0.3); }
+  .province-item .pname { font-size: 13px; color: var(--text2); }
+  .province-item .pcost { font-size: 13px; font-weight: 700; }
+  .province-item.high .pcost { color: var(--red); }
+  .province-item.mid .pcost { color: var(--amber); }
+  .province-item.low .pcost { color: var(--teal); }
+  .province-item.rank1 { border-color: rgba(232,83,74,0.4); background: rgba(232,83,74,0.05); }
+  .province-item.rank2 { border-color: rgba(232,83,74,0.3); background: rgba(232,83,74,0.03); }
+
+  /* TIMELINE */
+  .timeline { display: flex; gap: 0; position: relative; margin: 30px 0; }
+  .timeline::before {
+    content: '';
+    position: absolute; top: 50%; left: 0; right: 0; height: 2px;
+    background: var(--border);
+    transform: translateY(-50%);
+  }
+  .tl-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    position: relative; padding: 20px 8px;
+  }
+  .tl-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid var(--amber);
+    background: var(--bg); z-index: 1;
+    margin-bottom: 16px;
+  }
+  .tl-val { font-family: 'Noto Serif SC', serif; font-size: 20px; font-weight: 700; color: var(--amber); }
+  .tl-label { font-size: 11px; color: var(--text3); text-align: center; margin-top: 4px; }
+  .tl-sub { font-size: 10px; color: var(--text3); text-align: center; }
+
+  /* COMPARE CHART */
+  .compare-bar-h { display: flex; flex-direction: column; gap: 10px; }
+  .cbar-item { display: flex; align-items: center; gap: 10px; }
+  .cbar-name { width: 60px; font-size: 12px; color: var(--text2); text-align: right; flex-shrink: 0; }
+  .cbar-track { flex: 1; background: rgba(255,255,255,0.04); border-radius: 3px; height: 28px; position: relative; overflow: hidden; }
+  .cbar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; padding-left: 8px;
+    font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.9);
+    transition: width 1.5s cubic-bezier(0.25,1,0.5,1);
+    width: 0; white-space: nowrap;
+  }
+  .cbar-fill.china { background: linear-gradient(90deg, rgba(232,83,74,0.5), var(--red)); }
+  .cbar-fill.korea { background: linear-gradient(90deg, rgba(232,83,74,0.3), #c0392b); }
+  .cbar-fill.other { background: linear-gradient(90deg, rgba(74,144,217,0.4), var(--blue)); }
+  .cbar-fill.low { background: linear-gradient(90deg, rgba(82,201,126,0.4), var(--green)); }
+
+  /* WAGE PENALTY */
+  .penalty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .penalty-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px;
+  }
+  .penalty-card .pct { font-family: 'Noto Serif SC', serif; font-size: 28px; font-weight: 900; color: var(--red); }
+  .penalty-card .psub { font-size: 11px; color: var(--text3); margin-top: 4px; }
+  .penalty-card .psrc { font-size: 10px; color: var(--text3); margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
+
+  /* LEISURE CHART */
+  .leisure-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+  /* POLICY CARDS */
+  .policy-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .policy-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+    transition: border-color .2s, transform .2s;
+  }
+  .policy-card:hover { border-color: rgba(46,196,182,0.3); transform: translateY(-2px); }
+  .policy-num { font-size: 28px; font-weight: 900; color: var(--border); font-family: 'Noto Serif SC', serif; }
+  .policy-title { font-size: 15px; font-weight: 700; margin-top: 4px; color: var(--teal); }
+  .policy-effect { font-size: 12px; color: var(--amber); margin-top: 8px; font-weight: 600; }
+  .policy-extra { font-size: 11px; color: var(--text3); margin-top: 6px; line-height: 1.6; }
+
+  /* CONCLUSION */
+  .conclusion {
+    background: linear-gradient(135deg, rgba(232,83,74,0.06), rgba(245,166,35,0.04));
+    border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 12px; padding: 40px;
+    margin-top: 40px;
+  }
+  .conclusion p { color: var(--text2); font-size: 15px; line-height: 1.9; }
+  .conclusion strong { color: var(--amber); }
+
+  /* INFOGRAPHIC STATS */
+  .infographic-row {
+    display: flex; gap: 2px; margin: 30px 0;
+    background: var(--card); border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .infographic-col {
+    flex: 1; padding: 20px; text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .infographic-col:last-child { border-right: none; }
+  .infographic-col .inum { font-family: 'Noto Serif SC', serif; font-size: 26px; font-weight: 900; }
+  .infographic-col .ilabel { font-size: 11px; color: var(--text3); margin-top: 4px; }
+  .infographic-col.amber .inum { color: var(--amber); }
+  .infographic-col.red .inum { color: var(--red); }
+  .infographic-col.teal .inum { color: var(--teal); }
+  .infographic-col.blue .inum { color: var(--blue); }
+  .infographic-col.green .inum { color: var(--green); }
+
+  /* CHART CONTAINER */
+  .chart-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px;
+  }
+  .chart-box h3 { font-size: 14px; color: var(--text2); margin-bottom: 20px; font-family: 'Noto Serif SC', serif; }
+  .chart-box canvas { max-height: 320px; }
+
+  /* REASON BARS */
+  .reason-item { margin-bottom: 20px; }
+  .reason-top { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .reason-label { color: var(--text); }
+  .reason-pct { color: var(--amber); font-weight: 700; }
+  .reason-track { background: rgba(255,255,255,0.04); border-radius: 4px; height: 10px; overflow: hidden; }
+  .reason-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--amber), #ffc845); }
+
+  /* QUOTE */
+  .quote-box {
+    border-left: 3px solid var(--amber);
+    padding: 16px 20px;
+    background: rgba(245,166,35,0.05);
+    border-radius: 0 8px 8px 0;
+    margin: 24px 0;
+    font-size: 14px; color: var(--text2); line-height: 1.8;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 60px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--text3); font-size: 12px;
+  }
+  footer a { color: var(--amber); text-decoration: none; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+  .animate-in { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+  .animate-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 40px 0; }
+
+  /* HIGHLIGHT */
+  .highlight { color: var(--amber); font-weight: 700; }
+  .highlight-red { color: var(--red); font-weight: 700; }
+  .highlight-teal { color: var(--teal); font-weight: 700; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    section { padding: 60px 24px; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .policy-grid { grid-template-columns: 1fr; }
+    .leisure-section { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  /* DOT PATTERN */
+  .dot-bg {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+    margin-right: 6px;
+  }
+  .tag-amber { background: rgba(245,166,35,0.15); color: var(--amber); }
+  .tag-red { background: rgba(232,83,74,0.15); color: var(--red); }
+  .tag-teal { background: rgba(46,196,182,0.15); color: var(--teal); }
+
+  /* STICKY HEADER within section */
+  .sticky-head {
+    position: sticky; top: 56px; z-index: 10;
+    background: rgba(12,16,24,0.9);
+    backdrop-filter: blur(8px);
+    padding: 12px 0; margin-bottom: 20px;
+  }
+
+  /* SCROLLING notice */
+  .note-box {
+    background: rgba(74,144,217,0.08);
+    border: 1px solid rgba(74,144,217,0.2);
+    border-radius: 6px; padding: 12px 16px;
+    font-size: 12px; color: var(--text3);
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">育娲人口研究 · 生育成本报告 2024</div>
+  <div class="nav-links">
+    <a href="#costs">养育成本</a>
+    <a href="#regions">地区差异</a>
+    <a href="#intl">国际比较</a>
+    <a href="#time">时间成本</a>
+    <a href="#crisis">生育危机</a>
+    <a href="#policy">政策建议</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero dot-bg">
+  <div class="hero-tag">📊 育娲专家团队 · 梁建章 黄文政 何亚福 · 2024/02</div>
+  <h1>中国养育一个孩子<br>要花<span>多少钱？</span></h1>
+  <p class="hero-sub">
+    这是一份触目惊心的数据报告。中国的生育成本相对于人均GDP，几乎是全球最高的。
+    2023年中国总和生育率已降至<strong style="color:var(--red)">1.0</strong>左右，出生人口仅<strong style="color:var(--red)">902万</strong>，连续七年下降。
+    数字背后，是数百万个家庭的现实困境。
+  </p>
+  <p class="hero-authors">作者：<span>梁建章、黄文政、何亚福</span> · 数据来源：<span>《中国统计年鉴 2023》</span></p>
+
+  <div class="alert">
+    <strong>⚠ 核心警示</strong>
+    <p>养育成本占人均GDP倍数达 <strong>6.3倍</strong>，在全球主要国家中高居第二（仅次于韩国7.79倍），
+    远超美国（4.11倍）、欧洲（2-3.6倍）。中国人的平均理想子女数均低于2个，几乎是世界最低的。</p>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">53.8<span class="unit">万元</span></div>
+      <div class="label">全国0-17岁平均养育成本</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">68<span class="unit">万元</span></div>
+      <div class="label">至大学本科毕业总成本</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">6.3<span class="unit">倍</span></div>
+      <div class="label">养育成本/人均GDP（全球次高）</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">1.0</div>
+      <div class="label">2023年中国总和生育率</div>
+    </div>
+  </div>
+
+  <div class="scroll-ind">
+    <div class="scroll-line"></div>
+    向下滚动探索数据
+  </div>
+</section>
+
+<!-- SECTION 1: 不生育的原因 -->
+<section id="why" class="animate-in">
+  <div class="section-label">背景</div>
+  <h2 class="section-title">为什么越来越多的家庭不生育？</h2>
+  <p class="section-desc">原国家卫计委2017年全国生育状况抽样调查：育龄妇女不打算再生育的前三位原因</p>
+
+  <div class="grid-2" style="gap:40px; align-items:center;">
+    <div>
+      <div class="reason-item">
+        <div class="reason-top"><span class="reason-label">💰 经济负担重</span><span class="reason-pct">77.4%</span></div>
+        <div class="reason-track"><div class="reason-fill" style="width:77.4%"></div></div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-top"><span class="reason-label">⏳ 年龄太大</span><span class="reason-pct">45.6%</span></div>
+        <div class="reason-track"><div class="reason-fill" style="width:45.6%; background:linear-gradient(90deg,var(--blue),#6fb3f0);"></div></div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-top"><span class="reason-label">👶 没人带孩子</span><span class="reason-pct">33.2%</span></div>
+        <div class="reason-track"><div class="reason-fill" style="width:33.2%; background:linear-gradient(90deg,var(--teal),#7de8e0);"></div></div>
+      </div>
+      <div class="quote-box">
+        经济负担是最核心的障碍。超过3/4的育龄妇女因 <strong style="color:var(--amber)">经济压力</strong> 放弃生育，远超其他原因。
+        降低生育成本是提升生育率的关键。
+      </div>
+    </div>
+    <div>
+      <div class="chart-box">
+        <h3>2022年全国居民人均消费支出构成</h3>
+        <canvas id="consumeChart"></canvas>
+        <p style="font-size:11px;color:var(--text3);margin-top:12px;">人均消费支出 24,538元（城镇30,391元 | 农村16,632元）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: 养育成本 -->
+<section id="costs" class="animate-in">
+  <div class="section-label">直接财务成本</div>
+  <h2 class="section-title">养大一个孩子要多少钱？</h2>
+  <p class="section-desc">基于《中国统计年鉴2023》数据，按照各成长阶段的实际花费估算。养育成本包含消费性支出（教育+非教育），教育支出占养育成本约34%。</p>
+
+  <!-- KEY NUMBERS -->
+  <div class="grid-4" style="margin-bottom:40px;">
+    <div class="big-card">
+      <div class="num amber">53.8<span style="font-size:20px">万</span></div>
+      <div class="title">全国0-17岁平均养育成本</div>
+      <div class="sub">数据来源：国家统计局 | 育娲人口</div>
+    </div>
+    <div class="big-card">
+      <div class="num red">68<span style="font-size:20px">万</span></div>
+      <div class="title">0岁至大学本科毕业</div>
+      <div class="sub">含4年大学费用14.2万元</div>
+    </div>
+    <div class="big-card">
+      <div class="num teal">66.7<span style="font-size:20px">万</span></div>
+      <div class="title">城镇0-17岁平均</div>
+      <div class="sub">是全国平均值的123.85%</div>
+    </div>
+    <div class="big-card">
+      <div class="num blue">36.5<span style="font-size:20px">万</span></div>
+      <div class="title">农村0-17岁平均</div>
+      <div class="sub">是全国平均值的67.78%</div>
+    </div>
+  </div>
+
+  <!-- STAGE BREAKDOWN -->
+  <div class="chart-box" style="margin-bottom:30px;">
+    <h3>📊 各成长阶段养育成本构成（全国平均）</h3>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px;">
+      <span class="tag tag-amber">总计 53.83万元</span>
+      <span style="font-size:12px;color:var(--text3)">教育支出占养育成本约34% · 孩子养育成本占家庭收入约50%</span>
+    </div>
+
+    <div class="bar-item">
+      <div class="blabel">怀孕期间</div>
+      <div class="bar-wrap"><div class="bar-fill amber" data-width="1.86">1.86% · 1万元</div></div>
+    </div>
+    <div class="bar-item">
+      <div class="blabel">分娩坐月子</div>
+      <div class="bar-wrap"><div class="bar-fill amber" data-width="2.79">2.79% · 1.5万元</div></div>
+    </div>
+    <div class="bar-item">
+      <div class="blabel">0-2岁婴儿</div>
+      <div class="bar-wrap"><div class="bar-fill teal" data-width="13.67">13.67% · 7.36万元（均约2.45万/年）</div></div>
+    </div>
+    <div class="bar-item">
+      <div class="blabel">3-5岁幼儿</div>
+      <div class="bar-wrap"><div class="bar-fill teal" data-width="20.36">20.36% · 10.96万元（含幼儿园1.2万/年）</div></div>
+    </div>
+    <div class="bar-item">
+      <div class="blabel">6-14岁义务</div>
+      <div class="bar-wrap"><div class="bar-fill blue" data-width="45.15">45.15% · 24.31万元（最大比重，均2.7万/年）</div></div>
+    </div>
+    <div class="bar-item">
+      <div class="blabel">15-17岁高中</div>
+      <div class="bar-wrap"><div class="bar-fill red" data-width="16.17">16.17% · 8.7万元（均2.9万/年）</div></div>
+    </div>
+
+    <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border);">
+      <div class="bar-item">
+        <div class="blabel">大学四年</div>
+        <div class="bar-wrap" style="background:rgba(245,166,35,0.06);">
+          <div class="bar-fill" style="background:linear-gradient(90deg,rgba(245,166,35,0.3),rgba(245,166,35,0.7));width:26%" data-width="26">+14.2万元（学费1万/年+住宿1500+生活2000/月）</div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--text3);margin-top:8px;padding-left:102px;">↑ 含大学则总成本达 <span style="color:var(--amber);font-weight:700">68万元</span></p>
+    </div>
+  </div>
+
+  <!-- CHILD ORDER COMPARISON -->
+  <div class="grid-2">
+    <div class="chart-box">
+      <h3>🏙 城镇家庭 · 孩次养育成本对比（0-17岁）</h3>
+      <div style="margin-top:12px;">
+        <div class="bar-item">
+          <div class="blabel">一孩</div>
+          <div class="bar-wrap"><div class="bar-fill amber" data-width="100">66.7万元</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">二孩</div>
+          <div class="bar-wrap"><div class="bar-fill teal" data-width="78.7">52.5万元（-21%）</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">三孩</div>
+          <div class="bar-wrap"><div class="bar-fill blue" data-width="59.8">39.9万元（-40%）</div></div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--text3);margin-top:12px;">二孩可共用一孩衣物、玩具、爬行垫等，0-2岁节省约6565元/年（衣着节省683元+居住节省5882元）</p>
+    </div>
+    <div class="chart-box">
+      <h3>🌾 农村家庭 · 孩次养育成本对比（0-17岁）</h3>
+      <div style="margin-top:12px;">
+        <div class="bar-item">
+          <div class="blabel">一孩</div>
+          <div class="bar-wrap"><div class="bar-fill amber" data-width="100">46.3万元</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">二孩</div>
+          <div class="bar-wrap"><div class="bar-fill teal" data-width="78.8">36.5万元（-21%）</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">三孩</div>
+          <div class="bar-wrap"><div class="bar-fill blue" data-width="59.8">27.7万元（-40%）</div></div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--text3);margin-top:12px;">参考美国农业部调查：独生子女成本比二孩家庭每孩平均高27%，比三孩及以上家庭每孩高67%</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: 收入分层 -->
+<section id="income" class="animate-in" style="background:var(--bg2);">
+  <div class="section-label">收入分层</div>
+  <h2 class="section-title">不同收入家庭，养育成本差距有多大？</h2>
+  <p class="section-desc">按五等份收入分组，高收入家庭养育成本是低收入家庭的 <span class="highlight">10.5倍</span>。</p>
+
+  <div class="chart-box">
+    <h3>📊 按收入水平区分的0-17岁孩子平均养育成本</h3>
+    <div style="margin-top:16px;">
+      <div class="bar-item">
+        <div class="blabel" style="width:120px;">高收入（20%）</div>
+        <div class="bar-wrap"><div class="bar-fill red" data-width="100">131.5万元</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:120px;">中偏上（20%）</div>
+        <div class="bar-wrap"><div class="bar-fill amber" data-width="52.6">69.2万元</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:120px;">中间（20%）</div>
+        <div class="bar-wrap"><div class="bar-fill teal" data-width="34">44.7万元</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:120px;">中偏下（20%）</div>
+        <div class="bar-wrap"><div class="bar-fill blue" data-width="21.4">28.2万元</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:120px;">低收入（20%）</div>
+        <div class="bar-wrap"><div class="bar-fill green" data-width="9.5">12.6万元</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:120px; color:var(--amber);">全国平均</div>
+        <div class="bar-wrap" style="border:1px solid rgba(245,166,35,0.3);"><div class="bar-fill amber" data-width="40.9" style="background:rgba(245,166,35,0.4);">53.8万元（全国平均）</div></div>
+      </div>
+    </div>
+    <div class="infographic-row" style="margin-top:24px;">
+      <div class="infographic-col amber"><div class="inum">36,883</div><div class="ilabel">全国人均可支配收入（元）</div></div>
+      <div class="infographic-col red"><div class="inum">90,116</div><div class="ilabel">高收入组人均可支配收入（元）</div></div>
+      <div class="infographic-col green"><div class="inum">8,601</div><div class="ilabel">低收入组人均可支配收入（元）</div></div>
+      <div class="infographic-col blue"><div class="inum">~50%</div><div class="ilabel">养育成本占家庭收入比例</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: 省份 -->
+<section id="regions" class="animate-in">
+  <div class="section-label">地区差异</div>
+  <h2 class="section-title">你所在的省份，养育成本是多少？</h2>
+  <p class="section-desc">上海、北京养育成本超百万，而西藏、青海不足40万。地区差异达2.9倍。基于各省居民人均消费支出与全国平均比例估算。</p>
+
+  <div class="grid-2" style="margin-bottom:30px;">
+    <div class="big-card" style="border-color:rgba(232,83,74,0.3);">
+      <div style="font-size:11px;color:var(--red);letter-spacing:2px;margin-bottom:8px;">🏆 最贵 · 上海</div>
+      <div class="num red">101<span style="font-size:20px">万元</span></div>
+      <div class="title">人均消费支出46,045元 · 是全国188%</div>
+    </div>
+    <div class="big-card" style="border-color:rgba(232,83,74,0.25);">
+      <div style="font-size:11px;color:var(--red);letter-spacing:2px;margin-bottom:8px;">🏆 最贵第二 · 北京</div>
+      <div class="num red">93.6<span style="font-size:20px">万元</span></div>
+      <div class="title">人均消费支出42,683元 · 是全国174%</div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-bottom:30px;">
+    <div class="big-card" style="border-color:rgba(46,196,182,0.3);">
+      <div style="font-size:11px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;">💚 最低 · 西藏</div>
+      <div class="num teal">34.9<span style="font-size:20px">万元</span></div>
+      <div class="title">仅为上海的34.6%</div>
+    </div>
+    <div class="big-card" style="border-color:rgba(46,196,182,0.25);">
+      <div style="font-size:11px;color:var(--teal);letter-spacing:2px;margin-bottom:8px;">💚 最低第二 · 青海</div>
+      <div class="num teal">37.9<span style="font-size:20px">万元</span></div>
+      <div class="title">仅为上海的37.5%</div>
+    </div>
+  </div>
+
+  <div class="chart-box">
+    <h3>📊 全国31省份 0-17岁孩子平均养育成本（万元）</h3>
+    <canvas id="provinceChart" style="max-height:500px;"></canvas>
+  </div>
+</section>
+
+<!-- SECTION 5: 国际比较 -->
+<section id="intl" class="animate-in" style="background:var(--bg2);">
+  <div class="section-label">国际比较</div>
+  <h2 class="section-title">中国养育成本，全球排第几？</h2>
+  <p class="section-desc">将一个孩子抚养至刚年满18岁所花的成本，相对于人均GDP的倍数。这是国际通用的横向比较指标。</p>
+
+  <div class="alert" style="margin-bottom:30px;">
+    <strong>🌐 结论</strong>
+    <p>中国养育成本相当于人均GDP的<strong>6.3倍</strong>，在所列13个国家中高居第二（仅次于韩国7.79倍）。中国2023年人均GDP约为85,698元，养育一个孩子相当于花掉<strong>近6年</strong>的人均产值！</p>
+  </div>
+
+  <div class="chart-box">
+    <h3>📊 各国养育一孩至18岁成本 / 人均GDP 倍数</h3>
+    <div class="compare-bar-h" style="margin-top:16px;">
+      <div class="cbar-item">
+        <div class="cbar-name">韩国</div>
+        <div class="cbar-track"><div class="cbar-fill korea" data-width="100">7.79倍 · 2013年数据</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name" style="color:var(--red);font-weight:700;">中国 🇨🇳</div>
+        <div class="cbar-track" style="border:1px solid rgba(232,83,74,0.3);"><div class="cbar-fill china" data-width="80.9">6.30倍 · 2022年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">意大利</div>
+        <div class="cbar-track"><div class="cbar-fill other" data-width="80.6">6.28倍 · 2021年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">英国</div>
+        <div class="cbar-track"><div class="cbar-fill other" data-width="67.4">5.25倍 · 2021年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">新西兰</div>
+        <div class="cbar-track"><div class="cbar-fill other" data-width="58.4">4.55倍 · 2018年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">加拿大</div>
+        <div class="cbar-track"><div class="cbar-fill other" data-width="55.7">4.34倍 · 2017年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">日本</div>
+        <div class="cbar-track"><div class="cbar-fill other" data-width="54.7">4.26倍 · 2010年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">美国</div>
+        <div class="cbar-track"><div class="cbar-fill other" data-width="52.8">4.11倍 · 2015年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">德国</div>
+        <div class="cbar-track"><div class="cbar-fill other" data-width="46.7">3.64倍 · 2018年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">爱尔兰</div>
+        <div class="cbar-track"><div class="cbar-fill other" data-width="45.8">3.57倍 · 2016年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">瑞士</div>
+        <div class="cbar-track"><div class="cbar-fill other" data-width="45.1">3.51倍 · 2020年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">瑞典</div>
+        <div class="cbar-track"><div class="cbar-fill low" data-width="37.4">2.91倍 · 2020年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">新加坡</div>
+        <div class="cbar-track"><div class="cbar-fill low" data-width="27">2.10倍 · 2021年</div></div>
+      </div>
+      <div class="cbar-item">
+        <div class="cbar-name">澳大利亚</div>
+        <div class="cbar-track"><div class="cbar-fill low" data-width="26.7">2.08倍 · 2018年</div></div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--text3);margin-top:16px;">注：各国数据年份不完全相同，仅供参考对比。现在韩国的生育率是全世界最低的，2022年仅0.78。</p>
+  </div>
+</section>
+
+<!-- SECTION 6: 时间成本 -->
+<section id="time" class="animate-in">
+  <div class="section-label">隐形代价</div>
+  <h2 class="section-title">养育孩子的时间成本与机会成本</h2>
+  <p class="section-desc">除了直接的财务支出，育龄家庭养育孩子还需要付出大量的时间成本和机会成本，这些"隐形代价"主要由女性承担。</p>
+
+  <!-- WORK TIME LOSS -->
+  <div class="chart-box" style="margin-bottom:24px;">
+    <h3>⏰ 女性生育后减少的有报酬工作时间</h3>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:16px;">数据来源：北大光华管理学院何雨辰和於嘉的工作论文（基于2010-2020年CFPS纵向数据）</p>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;">
+      <div style="background:var(--bg3);border-radius:8px;padding:16px;text-align:center;border:1px solid var(--border);">
+        <div style="font-size:11px;color:var(--text3);">孩子0岁</div>
+        <div style="font-size:28px;font-weight:900;color:var(--red);font-family:'Noto Serif SC',serif;">-15</div>
+        <div style="font-size:11px;color:var(--text2);">小时/周</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px;">≈ -780小时/年</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:16px;text-align:center;border:1px solid var(--border);">
+        <div style="font-size:11px;color:var(--text3);">孩子1岁</div>
+        <div style="font-size:28px;font-weight:900;color:var(--red);font-family:'Noto Serif SC',serif;">-12.5</div>
+        <div style="font-size:11px;color:var(--text2);">小时/周</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px;">≈ -650小时/年</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:16px;text-align:center;border:1px solid var(--border);">
+        <div style="font-size:11px;color:var(--text3);">孩子2岁</div>
+        <div style="font-size:28px;font-weight:900;color:var(--amber);font-family:'Noto Serif SC',serif;">-5</div>
+        <div style="font-size:11px;color:var(--text2);">小时/周</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px;">≈ -260小时/年</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:16px;text-align:center;border:1px solid var(--border);">
+        <div style="font-size:11px;color:var(--text3);">孩子3岁</div>
+        <div style="font-size:28px;font-weight:900;color:var(--amber);font-family:'Noto Serif SC',serif;">-7</div>
+        <div style="font-size:11px;color:var(--text2);">小时/周</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px;">≈ -364小时/年</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:16px;text-align:center;border:1px solid var(--border);">
+        <div style="font-size:11px;color:var(--text3);">孩子4岁</div>
+        <div style="font-size:28px;font-weight:900;color:var(--teal);font-family:'Noto Serif SC',serif;">-1</div>
+        <div style="font-size:11px;color:var(--text2);">小时/周</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px;">≈ -52小时/年</div>
+      </div>
+    </div>
+    <div style="background:rgba(232,83,74,0.08);border:1px solid rgba(232,83,74,0.2);border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div style="font-size:12px;color:var(--text3);">0-4岁累计减少工作时间</div>
+        <div style="font-size:32px;font-weight:900;color:var(--red);font-family:'Noto Serif SC',serif;">2,106 <span style="font-size:16px;">小时</span></div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--text3);">按时薪30元计算，机会成本约</div>
+        <div style="font-size:32px;font-weight:900;color:var(--red);font-family:'Noto Serif SC',serif;">6.3<span style="font-size:16px;">万元</span></div>
+      </div>
+      <div style="max-width:300px;">
+        <div style="font-size:11px;color:var(--text3);">⚠ 中国男性的有报酬工作时间在成为父亲后<strong style="color:var(--text2);">并没有发生显著变化</strong>，时间成本主要由女性承担</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEISURE TIME LOSS -->
+  <div class="leisure-section">
+    <div class="chart-box">
+      <h3>🧘 母亲减少的闲暇时间（小时/周）</h3>
+      <p style="font-size:11px;color:var(--text3);margin-bottom:16px;">数据来源：杜凤莲等《中国城镇家庭的育儿时间成本》(2023)</p>
+      <div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:10px;"><span class="tag tag-amber">一孩家庭</span></div>
+        <div class="bar-item">
+          <div class="blabel">孩子0-6岁</div>
+          <div class="bar-wrap"><div class="bar-fill red" data-width="90">-12.6小时/周</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">孩子7-12岁</div>
+          <div class="bar-wrap"><div class="bar-fill amber" data-width="55">-7.7小时/周</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">孩子13-18岁</div>
+          <div class="bar-wrap"><div class="bar-fill teal" data-width="35.7">-5.0小时/周</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin:12px 0 6px;font-weight:600;color:var(--amber);">一孩0-18岁：母亲累计少闲暇 8,564小时，平均每周 -8.7小时</div>
+      </div>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:10px;"><span class="tag tag-red">二孩家庭</span></div>
+        <div class="bar-item">
+          <div class="blabel">孩子0-6岁</div>
+          <div class="bar-wrap"><div class="bar-fill red" data-width="100">-14.0小时/周</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">孩子7-12岁</div>
+          <div class="bar-wrap"><div class="bar-fill amber" data-width="65">-9.1小时/周</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">孩子13-18岁</div>
+          <div class="bar-wrap"><div class="bar-fill teal" data-width="61.4">-8.6小时/周</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:12px;color:var(--red);">二孩0-18岁：母亲累计少闲暇 10,651小时，平均每周 -10.8小时</div>
+      </div>
+    </div>
+    <div class="chart-box">
+      <h3>🧘 父亲减少的闲暇时间（小时/周）</h3>
+      <p style="font-size:11px;color:var(--text3);margin-bottom:16px;">数据来源：杜凤莲等《中国城镇家庭的育儿时间成本》(2023)</p>
+      <div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:10px;"><span class="tag tag-amber">一孩家庭</span></div>
+        <div class="bar-item">
+          <div class="blabel">孩子0-6岁</div>
+          <div class="bar-wrap"><div class="bar-fill blue" data-width="63">-8.8小时/周</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">孩子7-12岁</div>
+          <div class="bar-wrap"><div class="bar-fill blue" data-width="39.3">-5.5小时/周</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">孩子13-18岁</div>
+          <div class="bar-wrap"><div class="bar-fill blue" data-width="20">-2.8小时/周</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin:12px 0 6px;font-weight:600;color:var(--blue);">一孩0-18岁：父亲累计少闲暇 5,827小时，平均每周 -5.9小时</div>
+      </div>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:10px;"><span class="tag tag-teal">二孩家庭</span></div>
+        <div class="bar-item">
+          <div class="blabel">孩子0-6岁</div>
+          <div class="bar-wrap"><div class="bar-fill blue" data-width="75">-10.5小时/周</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">孩子7-12岁</div>
+          <div class="bar-wrap"><div class="bar-fill blue" data-width="53.6">-7.5小时/周</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel">孩子13-18岁</div>
+          <div class="bar-wrap"><div class="bar-fill blue" data-width="29.3">-4.1小时/周</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:12px;color:var(--teal);">二孩0-18岁：父亲累计少闲暇 8,069小时，平均每周 -8.2小时</div>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:rgba(46,196,182,0.05);border-radius:6px;font-size:11px;color:var(--text3);">
+        📚 小学生家长辅导作业时长：2010年→2018年<br>
+        小学：<span style="color:var(--amber);">3.67小时/周 → 5.88小时/周</span>（+60%）<br>
+        初中：<span style="color:var(--amber);">1.56小时/周 → 3.03小时/周</span>（+94%）
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: 母职惩罚 -->
+<section id="wage" class="animate-in" style="background:var(--bg2);">
+  <div class="section-label">职场代价</div>
+  <h2 class="section-title">生育对女性工资的"惩罚"有多重？</h2>
+  <p class="section-desc">生育孩子还会导致女性的长期工资收入下降。综合多篇论文数据，在中国每生一个孩子会导致女性工资率下降 <span class="highlight-red">12%–17%</span>，远高于欧美水平（约7%）。</p>
+
+  <div class="chart-box" style="margin-bottom:24px;">
+    <h3>📉 中国"母职工资惩罚"研究汇总</h3>
+    <div class="penalty-grid">
+      <div class="penalty-card">
+        <div class="pct">-76%</div>
+        <div class="psub">城镇女性多生育一个子女<br>（2004-2006年数据）</div>
+        <div class="psrc">张川川《子女数量对已婚女性劳动供给和工资的影响》<br>《人口与经济》2011</div>
+      </div>
+      <div class="penalty-card">
+        <div class="pct">-18%</div>
+        <div class="psub">女性在生育当年的工资率下降<br>（1991-2009年数据）</div>
+        <div class="psrc">贾男、甘犁、张劼《工资率、"生育陷阱"与不可观测类型》<br>《经济研究》2013</div>
+      </div>
+      <div class="penalty-card">
+        <div class="pct">-7%/-16.8%</div>
+        <div class="psub">生育1孩/2孩工资率下降<br>（1993-2006年数据）</div>
+        <div class="psrc">於嘉、谢宇《生育对我国女性工资率的影响》<br>《人口研究》2014</div>
+      </div>
+      <div class="penalty-card">
+        <div class="pct">-9.4%→-17.5%</div>
+        <div class="psub">1989年→2015年，每多生一孩<br>惩罚效应持续加剧</div>
+        <div class="psrc">申超《扩大的不平等：母职惩罚的演变（1989—2015）》<br>《社会》2020</div>
+      </div>
+      <div class="penalty-card">
+        <div class="pct">-17%/-29.1%</div>
+        <div class="psub">国有部门-12%，市场部门惩罚更重达-29%<br>（1989-2015年数据）</div>
+        <div class="psrc">许琪《从父职工资溢价到母职工资惩罚》<br>《社会学研究》2021</div>
+      </div>
+      <div class="penalty-card">
+        <div class="pct">-5.6%/-7.1%</div>
+        <div class="psub">生育一孩/二孩导致家庭总收入下降<br>（2010-2018年数据）</div>
+        <div class="psrc">王俊、石人炳《中国家庭生育二孩的边际机会成本》<br>《人口与经济》2021</div>
+      </div>
+    </div>
+    <div class="infographic-row" style="margin-top:24px;">
+      <div class="infographic-col red"><div class="inum">-6.6%</div><div class="ilabel">生育1孩后妻子就业几率下降</div></div>
+      <div class="infographic-col red"><div class="inum">-9.3%</div><div class="ilabel">继续生育2孩后就业几率再降</div></div>
+      <div class="infographic-col amber"><div class="inum">76.1%</div><div class="ilabel">0-17岁孩子日常照料主要由母亲承担</div></div>
+      <div class="infographic-col blue"><div class="inum">2倍</div><div class="ilabel">在业女性家务劳动时间约为男性的2倍</div></div>
+    </div>
+  </div>
+
+  <div class="quote-box">
+    <strong style="color:var(--amber);">👩‍💼 职场不公平现象：</strong>在婚育阶段被调岗或降薪、被动失去晋升机会，是职场婚育女性可能遇到的不公平待遇。
+    家庭主妇几年后再重新回归职场会遇到很多困难，再就业时可能和职场新人的能力水平差不多，
+    而企业更愿意招聘职场新人。由于社会环境对女性的生育不够友好，有些女性不得不放弃生育，以换取在事业上取得成功的机会。
+  </div>
+</section>
+
+<!-- SECTION 8: 生育危机 -->
+<section id="crisis" class="animate-in">
+  <div class="section-label">人口危机</div>
+  <h2 class="section-title">中国正面临历史性生育危机</h2>
+  <p class="section-desc">2023年中国出生人口为902万，总和生育率仅为1.0左右，连续第七年下降，出生人口不到2016年的一半。</p>
+
+  <div class="grid-2" style="margin-bottom:30px;gap:30px;">
+    <div>
+      <div class="chart-box">
+        <h3>📊 中国出生人口趋势（万人）</h3>
+        <canvas id="birthChart"></canvas>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="big-card" style="border-color:rgba(232,83,74,0.3);">
+          <div class="num red">902<span style="font-size:18px;">万</span></div>
+          <div class="title">2023年出生人口 — 1949年以来最低</div>
+          <div class="sub">连续第七年下降 · 不到2016年的一半</div>
+        </div>
+        <div class="big-card" style="border-color:rgba(232,83,74,0.25);">
+          <div class="num red">1.0</div>
+          <div class="title">2023年总和生育率 — 低于日本</div>
+          <div class="sub">日本生育率约1.2 · 中国更低</div>
+        </div>
+        <div class="big-card" style="border-color:rgba(245,166,35,0.3);">
+          <div class="num amber">683.5<span style="font-size:18px;">万对</span></div>
+          <div class="title">2022年结婚登记对数</div>
+          <div class="sub">2013年为1346.9万对 · 9年间降幅约49%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDEAL CHILDREN -->
+  <div class="chart-box">
+    <h3>🌍 各国平均理想子女数对比（2011年数据）</h3>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:16px;">OECD数据显示，绝大部分国家的平均理想子女数均超过2个；而多次调查结果表明，中国人的平均理想子女数均低于2个。</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;">
+      <div>
+        <div class="bar-item">
+          <div class="blabel" style="width:80px;">爱尔兰</div>
+          <div class="bar-wrap"><div class="bar-fill green" data-width="97">2.685</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel" style="width:80px;">塞浦路斯</div>
+          <div class="bar-wrap"><div class="bar-fill green" data-width="100">2.765</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel" style="width:80px;">丹麦</div>
+          <div class="bar-wrap"><div class="bar-fill teal" data-width="87">2.41</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel" style="width:80px;">法国</div>
+          <div class="bar-wrap"><div class="bar-fill teal" data-width="86">2.38</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel" style="width:80px;">瑞典</div>
+          <div class="bar-wrap"><div class="bar-fill teal" data-width="86">2.37</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel" style="width:80px;">英国</div>
+          <div class="bar-wrap"><div class="bar-fill teal" data-width="80">2.23</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel" style="width:80px;">德国</div>
+          <div class="bar-wrap"><div class="bar-fill blue" data-width="78">2.15</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="blabel" style="width:80px;">奥地利</div>
+          <div class="bar-wrap"><div class="bar-fill blue" data-width="66">1.825</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="background:rgba(232,83,74,0.08);border:1px solid rgba(232,83,74,0.3);border-radius:8px;padding:20px;margin-bottom:16px;">
+          <div style="font-size:12px;color:var(--text3);margin-bottom:8px;">🇨🇳 中国历年理想子女数调查</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">2006年调查</span><span style="color:var(--amber);font-weight:700;">1.73个</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">2013年调查</span><span style="color:var(--amber);font-weight:700;">1.93个</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">2017年调查</span><span style="color:var(--amber);font-weight:700;">1.96个</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">2019年调查</span><span style="color:var(--red);font-weight:700;">1.73个</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">2021年调查</span><span style="color:var(--red);font-weight:700;">1.64个</span></div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--text3);">对比：韩国理想子女数2.45-2.55个（2006-2014），日本2.41-2.60个（2000-2012）<br>中国人的平均生育意愿不但显著低于日本，也显著低于韩国。</div>
+        </div>
+        <div style="background:rgba(74,144,217,0.06);border:1px solid rgba(74,144,217,0.2);border-radius:8px;padding:16px;font-size:12px;color:var(--text3);">
+          <strong style="color:var(--blue);">📊 人口预测</strong><br>
+          若无实质性鼓励生育政策，据育娲人口预测：<br>
+          • 2050年：中国人口将减至 <strong style="color:var(--amber);">11.7亿</strong><br>
+          • 2100年：中国人口将降至 <strong style="color:var(--red);">4.79亿</strong><br>
+          • 届时占世界比例：<strong style="color:var(--red);">17% → 4.8%</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: 政策建议 -->
+<section id="policy" class="animate-in" style="background:var(--bg2);">
+  <div class="section-label">政策建议</div>
+  <h2 class="section-title">九项减轻生育成本的具体措施</h2>
+  <p class="section-desc">生育成本过高是影响育龄家庭生育意愿的最重要负面因素之一。全国层面亟需尽快出台减轻育龄家庭生育成本的政策。</p>
+
+  <div class="note-box">
+    📌 以下估算是根据本报告养育成本降低的幅度来推算，实际效果取决于政策落实的力度和广度。
+    三项最重要措施（现金补贴、购房补贴、托儿所）总财政投入占GDP约5%，可将生育率提升至约1.6。
+  </div>
+
+  <div class="policy-grid">
+    <div class="policy-card" style="border-top:3px solid var(--amber);">
+      <div class="policy-num">01</div>
+      <div class="policy-title">💰 现金和税收补贴</div>
+      <div class="policy-effect">↑ 提升生育率约20% · 每年多生约200万</div>
+      <div class="policy-extra">
+        建议：二孩家庭每孩每月补贴1000元，多孩家庭每孩每月2000元至18岁。
+        二孩家庭所得税和社保减半，三孩家庭全免。
+        对比：欧洲国家家庭补贴占GDP约1-2%，中国目前不到0.1%。
+      </div>
+    </div>
+    <div class="policy-card" style="border-top:3px solid var(--amber);">
+      <div class="policy-num">02</div>
+      <div class="policy-title">🏠 购房补贴</div>
+      <div class="policy-effect">↑ 提升生育率约20% · 每年多生约200万</div>
+      <div class="policy-extra">
+        建议：返还二孩家庭房贷利息的50%，三孩家庭全额返还。
+        或实行一孩九折、二孩七折、三孩五折的房价优惠（设封顶上限）。
+        大城市高房价是生育率低的重要原因（上海生育率仅0.7）。
+      </div>
+    </div>
+    <div class="policy-card" style="border-top:3px solid var(--amber);">
+      <div class="policy-num">03</div>
+      <div class="policy-title">🏫 增建托儿所</div>
+      <div class="policy-effect">↑ 提升生育率约10% · 每年多生约100万</div>
+      <div class="policy-extra">
+        现状：3岁以下婴幼儿入托率仅5.5%（2021年国家卫健委数据）。
+        目标：将入托率提高到50%。
+        需要：建设至少十万个幼托中心，每年需财政补贴约4000亿元。
+      </div>
+    </div>
+    <div class="policy-card" style="border-top:3px solid var(--teal);">
+      <div class="policy-num">04</div>
+      <div class="policy-title">⚖️ 提供男女平等育产假</div>
+      <div class="policy-effect">↑ 提升生育率约3% · 每年多生约30万</div>
+      <div class="policy-extra">
+        当前：女职工98天产假，各省已普遍延长至158天。
+        建议：出台男女平等的育产假政策，政府承担产假期间用工成本。
+        参考：瑞典夫妻共480天带薪育儿假，父母各享90天不可转让。
+      </div>
+    </div>
+    <div class="policy-card" style="border-top:3px solid var(--teal);">
+      <div class="policy-num">05</div>
+      <div class="policy-title">👩‍👧 引进外国保姆/劳工</div>
+      <div class="policy-effect">↑ 提升生育率约2% · 每年多生约20万</div>
+      <div class="policy-extra">
+        上海有经验保姆月薪已超1万元，超出白领承受范围。
+        香港经验：每三个有孩子家庭就有一家雇佣外籍保姆（月薪约4000元）。
+        若引进300万外国保姆，可每年节省2000多亿费用。
+      </div>
+    </div>
+    <div class="policy-card" style="border-top:3px solid var(--teal);">
+      <div class="policy-num">06</div>
+      <div class="policy-title">💻 推广灵活办公模式</div>
+      <div class="policy-effect">↑ 提升生育率4%-10% · 每年多生40-100万</div>
+      <div class="policy-extra">
+        混合办公可让家长有更多时间陪伴孩子，减轻育儿压力。
+        携程2022年推行"3+2"混合工作制，工作效率未下降，员工满意度大幅提升。
+        对职业女性尤其有益，可更灵活地平衡家庭与工作。
+      </div>
+    </div>
+    <div class="policy-card" style="border-top:3px solid var(--blue);">
+      <div class="policy-num">07</div>
+      <div class="policy-title">👩 保障单身女性生育权</div>
+      <div class="policy-effect">↑ 提升生育率约2% · 每年多生约20万</div>
+      <div class="policy-extra">
+        欧盟国家非婚生子占新生儿比例平均41.3%，法国高达60.4%。
+        建议：废除歧视非婚生育的政策，保障非婚生孩子权益，无条件为非婚生孩子上户口。
+        北欧国家宽容非婚生育，同时提供丰厚养育福利，维持了较高生育率。
+      </div>
+    </div>
+    <div class="policy-card" style="border-top:3px solid var(--blue);">
+      <div class="policy-num">08</div>
+      <div class="policy-title">🧬 允许辅助生育技术</div>
+      <div class="policy-effect">↑ 提升生育率约2% · 每年多生约20万</div>
+      <div class="policy-extra">
+        中国不孕不育率已升至12%-18%（2021年）。
+        建议：将不孕不育治疗纳入医保，允许单身女性使用辅助生育技术（含冻卵）。
+        以色列是发达国家中生育率最高的，为45岁以下女性提供几乎全额辅助生育补贴。
+      </div>
+    </div>
+    <div class="policy-card" style="border-top:3px solid var(--red);">
+      <div class="policy-num">09</div>
+      <div class="policy-title">🎓 教育改革（减少内卷）</div>
+      <div class="policy-effect">↑ 提升生育率10%-30% · 效果最大但最难</div>
+      <div class="policy-extra">
+        中国学生补课和学习时间是全球最高的。亚洲国家生育率普遍比欧美低0.5个孩子，与考试压力密切相关。
+        建议：取消中考，淡化高考，将分层考试推迟到大学阶段，缩短学制2年，让大部分学生20岁左右就大学毕业。
+        潜在效益：可将整体社会效率至少提升5%。
+      </div>
+    </div>
+  </div>
+
+  <!-- POLICY SUMMARY CHART -->
+  <div class="chart-box" style="margin-top:30px;">
+    <h3>📊 各项政策预估提升生育率效果</h3>
+    <div style="margin-top:16px;">
+      <div class="bar-item">
+        <div class="blabel" style="width:140px;">教育改革</div>
+        <div class="bar-wrap"><div class="bar-fill red" data-width="100">10%-30%</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:140px;">现金和税收补贴</div>
+        <div class="bar-wrap"><div class="bar-fill amber" data-width="66.7">20%</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:140px;">购房补贴</div>
+        <div class="bar-wrap"><div class="bar-fill amber" data-width="66.7">20%</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:140px;">灵活办公模式</div>
+        <div class="bar-wrap"><div class="bar-fill teal" data-width="33.3">4%-10%</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:140px;">增建托儿所</div>
+        <div class="bar-wrap"><div class="bar-fill teal" data-width="33.3">10%</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:140px;">男女平等育产假</div>
+        <div class="bar-wrap"><div class="bar-fill blue" data-width="10">3%</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:140px;">引进外国保姆</div>
+        <div class="bar-wrap"><div class="bar-fill blue" data-width="6.7">2%</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:140px;">保障单身生育权</div>
+        <div class="bar-wrap"><div class="bar-fill blue" data-width="6.7">2%</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="blabel" style="width:140px;">允许辅助生育</div>
+        <div class="bar-wrap"><div class="bar-fill blue" data-width="6.7">2%</div></div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--text3);margin-top:16px;">研究显示：平均拿出1%的GDP用于鼓励生育，生育率就会提升约0.1。法国和瑞典拿出GDP的3%-4%鼓励生育，生育率维持在1.8-1.9（接近更替水平）。</p>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conclusion" class="animate-in">
+  <div class="section-label">总结</div>
+  <h2 class="section-title">结论</h2>
+  <div class="conclusion">
+    <p>
+      中国几乎<strong>全球最低的生育率</strong>的根本原因，是几乎<strong>全球最高的生育成本</strong>——养育成本高达人均GDP的6.3倍。
+      2023年出生人口仅902万，总和生育率仅1.0左右，不仅低于世界上几乎所有国家，比严重少子老龄化的日本还低不少。
+    </p>
+    <br>
+    <p>
+      少子化将深远影响中国经济增长潜力、创新活力、民众幸福指数乃至民族复兴。
+      人口急剧萎缩，意味着规模效应的持续弱化和综合国力的衰退。
+    </p>
+    <br>
+    <p>
+      <strong>短期来看</strong>，补贴生育有助于扩大内需、稳增长、稳就业；
+      <strong>长期来看</strong>，补贴生育有助于提升人力资源、人力资本、经济社会活力，增强中国经济发展的信心，提升中国的创新力和竞争力。
+      全国层面亟需尽快出台减轻育龄家庭生育成本的政策。
+    </p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px;">
+    <div style="background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:24px;">
+      <div style="font-size:12px;color:var(--amber);font-weight:600;margin-bottom:12px;">💡 核心数据回顾</div>
+      <div style="font-size:13px;color:var(--text2);line-height:2;">
+        全国0-17岁：<strong style="color:var(--amber);">53.8万元</strong><br>
+        至大学毕业：<strong style="color:var(--amber);">68万元</strong><br>
+        城镇0-17岁：<strong style="color:var(--amber);">66.7万元</strong><br>
+        农村0-17岁：<strong style="color:var(--amber);">36.5万元</strong><br>
+        上海0-17岁：<strong style="color:var(--red);">101万元</strong>
+      </div>
+    </div>
+    <div style="background:rgba(232,83,74,0.06);border:1px solid rgba(232,83,74,0.2);border-radius:10px;padding:24px;">
+      <div style="font-size:12px;color:var(--red);font-weight:600;margin-bottom:12px;">⚠ 时间成本回顾</div>
+      <div style="font-size:13px;color:var(--text2);line-height:2;">
+        工资率下降：每孩<strong style="color:var(--red);">-12%~-17%</strong><br>
+        工作减少：孩子0-4岁共<strong style="color:var(--red);">2106小时</strong><br>
+        母亲闲暇减少：一孩0-18岁共<strong style="color:var(--red);">8564小时</strong><br>
+        0-17岁照料主要由母亲：<strong style="color:var(--red);">76.1%</strong>
+      </div>
+    </div>
+    <div style="background:rgba(46,196,182,0.06);border:1px solid rgba(46,196,182,0.2);border-radius:10px;padding:24px;">
+      <div style="font-size:12px;color:var(--teal);font-weight:600;margin-bottom:12px;">📊 国际比较回顾</div>
+      <div style="font-size:13px;color:var(--text2);line-height:2;">
+        中国养育成本/人均GDP：<strong style="color:var(--red);">6.3倍</strong><br>
+        韩国：7.79倍（全球最高）<br>
+        美国：4.11倍 日本：4.26倍<br>
+        澳大利亚：<strong style="color:var(--teal);">2.08倍（最低之一）</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div style="color:var(--text2);font-size:13px;margin-bottom:4px;font-family:'Noto Serif SC',serif;">中国生育成本报告 2024版</div>
+    <div>作者：梁建章、黄文政、何亚福 · 育娲人口研究 · 2024年2月</div>
+    <div style="margin-top:4px;">数据来源：国家统计局、《中国统计年鉴2023》及多篇学术论文</div>
+  </div>
+  <div style="text-align:right;">
+    <div style="color:var(--text2);margin-bottom:4px;">本页面为报告可视化解读，所有数据来自原始报告</div>
+    <div>本报告为学术研究性质，不构成任何投资建议</div>
+  </div>
+</footer>
+
+<script>
+// =====================
+// CHART.JS CONFIGURATIONS
+// =====================
+
+Chart.defaults.color = '#8fa3bb';
+Chart.defaults.borderColor = '#253047';
+Chart.defaults.font.family = "'Noto Sans SC', sans-serif";
+
+// 1. CONSUMPTION PIE CHART
+const consumeCtx = document.getElementById('consumeChart').getContext('2d');
+new Chart(consumeCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['食品烟酒 30.5%', '居住 24.0%', '交通通信 13.0%', '教育文化娱乐 10.1%', '医疗保健 8.6%', '生活用品及服务 5.8%', '衣着 5.6%', '其他 2.4%'],
+    datasets: [{
+      data: [7481, 5882, 3195, 2469, 2120, 1432, 1365, 595],
+      backgroundColor: ['#f5a623','#2ec4b6','#4a90d9','#52c97e','#e8534a','#9b59b6','#f39c12','#95a5a6'],
+      borderColor: '#1a2233',
+      borderWidth: 2,
+      hoverOffset: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'right', labels: { padding: 10, font: { size: 11 } } },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.label}: ${ctx.raw.toLocaleString()}元`
+        }
+      }
+    }
+  }
+});
+
+// 2. PROVINCE CHART
+const provinceCtx = document.getElementById('provinceChart').getContext('2d');
+const provinces = ['上海','北京','浙江','江苏','广东','天津','福建','重庆','湖北','湖南','山东','辽宁','安徽','四川','内蒙古','江西','海南','河北','黑龙江','陕西','宁夏','河南','云南','广西','贵州','新疆','吉林','山西','甘肃','青海','西藏'];
+const costs = [101.01,93.64,85.49,72.06,70.57,68.72,65.91,55.66,54.47,52.83,49.67,49.59,49.45,48.93,48.92,47.62,47.17,45.83,44.78,43.54,41.98,41.72,41.57,40.24,39.35,39.33,39.26,38.47,38.37,37.87,34.85];
+const colors = costs.map(c => c >= 80 ? '#e8534a' : c >= 60 ? '#f5a623' : c >= 45 ? '#4a90d9' : '#2ec4b6');
+
+new Chart(provinceCtx, {
+  type: 'bar',
+  data: {
+    labels: provinces,
+    datasets: [{
+      label: '0-17岁平均养育成本（万元）',
+      data: costs,
+      backgroundColor: colors,
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    indexAxis: 'y',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `养育成本：${ctx.raw}万元`
+        }
+      }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: '万元', color: '#8fa3bb' },
+        grid: { color: 'rgba(255,255,255,0.04)' }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { font: { size: 11 } }
+      }
+    }
+  }
+});
+
+// 3. BIRTH CHART
+const birthCtx = document.getElementById('birthChart').getContext('2d');
+new Chart(birthCtx, {
+  type: 'line',
+  data: {
+    labels: ['2016','2017','2018','2019','2020','2021','2022','2023'],
+    datasets: [{
+      label: '出生人口（万人）',
+      data: [1786, 1723, 1523, 1465, 1200, 1062, 956, 902],
+      borderColor: '#e8534a',
+      backgroundColor: 'rgba(232,83,74,0.08)',
+      borderWidth: 2.5,
+      fill: true,
+      tension: 0.3,
+      pointBackgroundColor: '#e8534a',
+      pointRadius: 5,
+      pointHoverRadius: 7
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `出生人口：${ctx.raw}万人`
+        }
+      }
+    },
+    scales: {
+      y: {
+        min: 800,
+        title: { display: true, text: '万人', color: '#8fa3bb' },
+        grid: { color: 'rgba(255,255,255,0.04)' }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// =====================
+// ANIMATE BARS ON SCROLL
+// =====================
+function animateBars(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const bars = entry.target.querySelectorAll('.bar-fill[data-width], .cbar-fill[data-width]');
+      bars.forEach(bar => {
+        const w = bar.getAttribute('data-width');
+        setTimeout(() => { bar.style.width = w + '%'; }, 100);
+      });
+    }
+  });
+}
+
+const barObserver = new IntersectionObserver(animateBars, { threshold: 0.1 });
+document.querySelectorAll('section, .chart-box, .big-card').forEach(el => barObserver.observe(el));
+
+// Initial trigger for bars in view
+document.querySelectorAll('.bar-fill[data-width], .cbar-fill[data-width]').forEach(bar => {
+  bar.style.width = '0%';
+});
+
+// =====================
+// ANIMATE SECTIONS
+// =====================
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.animate-in').forEach(el => sectionObserver.observe(el));
+
+// =====================
+// COUNTER ANIMATION
+// =====================
+function animateCounter(el, end, duration = 1500) {
+  let start = 0;
+  const step = end / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= end) { start = end; clearInterval(timer); }
+    el.textContent = start.toFixed(1);
+  }, 16);
+}
+
+// Trigger counters when hero stats visible
+const heroStats = document.querySelectorAll('.hero-stat .num');
+setTimeout(() => {
+  heroStats.forEach(el => {
+    const text = el.textContent;
+    const num = parseFloat(text);
+    if (!isNaN(num)) {
+      el.textContent = '0';
+      animateCounter(el, num);
+    }
+  });
+}, 600);
+</script>
+
+</body>
+</html>
