@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年中国20–35岁女性婚恋需求全景报告</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ── Modern feminine palette ── */
+  --ink: #2d2a32;
+  --paper: #faf7f4;
+  --rose: #b5646a;
+  --rose-deep: #8e3b4a;
+  --rose-soft: #f2e0df;
+  --rose-glow: #d4949a;
+  --plum: #5c3d5e;
+  --plum-light: #ede4ee;
+  --sage: #7a9a7e;
+  --sage-light: #e6f0e7;
+  --sage-deep: #4d7050;
+  --terra: #c4836a;
+  --terra-light: #f5e8e1;
+  --warm: #d9b89c;
+  --warm-light: #f7f0e8;
+  --mauve: #9b7ea6;
+  --cream: #f5f0ea;
+  --border: #e0d8d0;
+  --gray: #8a8490;
+  --gray-light: #f0ece8;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.85;
+  font-weight: 400;
+}
+
+/* ── Hero ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(155deg, #2d2a32 0%, #5c3d5e 35%, #8e3b4a 65%, #c4836a 100%);
+  color: #fff;
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(180,100,106,.25) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(196,131,106,.2) 0%, transparent 50%);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5C20 16.9 17.1 14 13.5 14S7 16.9 7 20.5 9.9 27 13.5 27c1.3 0 2.5-.4 3.5-1' fill='none' stroke='%23ffffff' stroke-opacity='.03' stroke-width='.5'/%3E%3C/svg%3E");
+}
+.hero-eyebrow {
+  font-size: 13px;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  opacity: .6;
+  margin-bottom: 28px;
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(30px, 5vw, 58px);
+  font-weight: 900;
+  line-height: 1.3;
+  max-width: 780px;
+  position: relative;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--rose-glow);
+}
+.hero-sub {
+  font-size: clamp(14px, 2vw, 18px);
+  margin-top: 24px;
+  max-width: 600px;
+  opacity: .75;
+  font-weight: 300;
+  position: relative;
+  line-height: 1.8;
+}
+.hero-stats {
+  display: flex;
+  gap: 36px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+}
+.hero-stat {
+  text-align: center;
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 20px 28px;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.hero-stat .num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 38px;
+  font-weight: 900;
+  display: block;
+  line-height: 1;
+}
+.hero-stat .label {
+  font-size: 12px;
+  opacity: .65;
+  margin-top: 6px;
+}
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  opacity: .4;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ── Layout ── */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+section { padding: 80px 0; }
+.section-divider {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rose), var(--terra));
+  margin-bottom: 28px;
+  border-radius: 2px;
+}
+.section-num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px;
+  color: var(--rose);
+  letter-spacing: 4px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(24px, 3.5vw, 38px);
+  font-weight: 900;
+  line-height: 1.35;
+  margin-bottom: 20px;
+  color: var(--plum);
+}
+h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 21px;
+  font-weight: 700;
+  margin: 28px 0 14px;
+  color: var(--rose-deep);
+}
+p { margin-bottom: 18px; color: #444; }
+strong { color: var(--ink); }
+
+/* ── Conclusion Cards ── */
+.conclusion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 36px 0;
+}
+.conclusion-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 28px 24px;
+  border-left: 4px solid var(--rose);
+  box-shadow: 0 2px 24px rgba(92,61,94,.06);
+  transition: transform .25s, box-shadow .25s;
+}
+.conclusion-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(92,61,94,.1); }
+.conclusion-card .card-num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 44px;
+  font-weight: 900;
+  color: var(--rose-soft);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.conclusion-card h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--plum);
+}
+.conclusion-card p { font-size: 13.5px; color: #666; margin-bottom: 0; }
+
+/* ── Chart containers ── */
+.chart-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  margin: 36px 0;
+}
+.chart-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 24px rgba(92,61,94,.06);
+}
+.chart-box h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--plum);
+}
+.chart-box .chart-desc {
+  font-size: 12px;
+  color: var(--gray);
+  margin-bottom: 16px;
+}
+.chart-box canvas { max-height: 320px; }
+
+/* ── Highlight banner ── */
+.highlight-banner {
+  background: linear-gradient(135deg, var(--plum) 0%, var(--rose-deep) 50%, var(--terra) 100%);
+  color: #fff;
+  padding: 56px 0;
+  margin: 36px 0;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.highlight-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.08) 0%, transparent 60%);
+}
+.highlight-banner .big-num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(44px, 8vw, 88px);
+  font-weight: 900;
+  line-height: 1;
+  display: block;
+  position: relative;
+}
+.highlight-banner .big-label {
+  font-size: 17px;
+  opacity: .85;
+  margin-top: 12px;
+  position: relative;
+}
+.highlight-banner .big-sub {
+  font-size: 13px;
+  opacity: .6;
+  margin-top: 8px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+/* ── Need Cards (6 needs) ── */
+.needs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+  margin: 36px 0;
+}
+.need-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 26px;
+  box-shadow: 0 2px 20px rgba(92,61,94,.05);
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s;
+}
+.need-card:hover { transform: translateY(-2px); }
+.need-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 4px 4px 0 0;
+}
+.need-card:nth-child(1)::before { background: linear-gradient(90deg, var(--rose-deep), var(--rose)); }
+.need-card:nth-child(2)::before { background: linear-gradient(90deg, var(--terra), var(--warm)); }
+.need-card:nth-child(3)::before { background: linear-gradient(90deg, var(--mauve), #b99ac5); }
+.need-card:nth-child(4)::before { background: linear-gradient(90deg, var(--sage-deep), var(--sage)); }
+.need-card:nth-child(5)::before { background: linear-gradient(90deg, var(--plum), #7a5a7e); }
+.need-card:nth-child(6)::before { background: linear-gradient(90deg, var(--terra), var(--rose)); }
+.need-card .need-icon { font-size: 30px; margin-bottom: 10px; }
+.need-card h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--plum);
+}
+.need-card p { font-size: 13.5px; color: #666; margin-bottom: 0; }
+.need-card .need-stat {
+  display: inline-block;
+  background: var(--rose-soft);
+  color: var(--rose-deep);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-top: 12px;
+}
+
+/* ── City tiers ── */
+.tier-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  margin: 36px 0;
+}
+.tier-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 2px 20px rgba(92,61,94,.05);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.tier-card .tier-label {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  font-weight: 900;
+  padding: 18px 14px;
+  border-radius: 12px;
+  text-align: center;
+  color: #fff;
+  line-height: 1.4;
+}
+.tier-card:nth-child(1) .tier-label { background: linear-gradient(135deg, var(--rose-deep), var(--rose)); }
+.tier-card:nth-child(2) .tier-label { background: linear-gradient(135deg, var(--plum), var(--mauve)); }
+.tier-card:nth-child(3) .tier-label { background: linear-gradient(135deg, var(--sage-deep), var(--sage)); }
+.tier-card:nth-child(4) .tier-label { background: linear-gradient(135deg, var(--terra), var(--warm)); }
+.tier-card .tier-content h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.tier-card .tier-content p { font-size: 13.5px; color: #555; }
+.tier-data {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.tier-data .td-item {
+  background: var(--cream);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #666;
+}
+.tier-data .td-item strong {
+  color: var(--rose-deep);
+  font-size: 17px;
+  display: block;
+  font-family: 'Noto Serif SC', serif;
+}
+
+/* ── Table ── */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 28px 0;
+  font-size: 13.5px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(92,61,94,.06);
+}
+.report-table thead th {
+  background: var(--plum);
+  color: #fff;
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .5px;
+}
+.report-table tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--gray-light);
+  vertical-align: top;
+}
+.report-table tbody tr:hover { background: var(--plum-light); }
+.report-table .tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  margin: 2px 3px 2px 0;
+}
+.tag-red { background: var(--rose-soft); color: var(--rose-deep); }
+.tag-blue { background: var(--plum-light); color: var(--plum); }
+.tag-green { background: var(--sage-light); color: var(--sage-deep); }
+.tag-purple { background: #f0e6f6; color: #6c3483; }
+
+/* ── Attitude types ── */
+.attitude-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin: 36px 0;
+}
+.attitude-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 2px 20px rgba(92,61,94,.05);
+  transition: transform .25s;
+}
+.attitude-card:hover { transform: translateY(-2px); }
+.attitude-card .att-emoji { font-size: 36px; margin-bottom: 10px; }
+.attitude-card h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--plum);
+  line-height: 1.5;
+}
+.attitude-card p { font-size: 13px; color: #666; }
+
+/* ── Pullquote ── */
+.pullquote {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(19px, 3vw, 28px);
+  font-weight: 700;
+  color: var(--rose-deep);
+  text-align: center;
+  padding: 44px 32px;
+  margin: 36px 0;
+  border-top: 2px solid var(--border);
+  border-bottom: 2px solid var(--border);
+  line-height: 1.7;
+  position: relative;
+}
+.pullquote::before {
+  content: '"';
+  font-size: 80px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--rose-soft);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+/* ── Bar compare ── */
+.bar-compare { margin: 24px 0; }
+.bar-item { margin-bottom: 14px; }
+.bar-item .bar-label {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  color: #555;
+}
+.bar-item .bar-track {
+  height: 26px;
+  background: var(--gray-light);
+  border-radius: 13px;
+  overflow: hidden;
+}
+.bar-item .bar-fill {
+  height: 100%;
+  border-radius: 13px;
+  transition: width 1.5s ease;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  font-size: 11px;
+  color: #fff;
+  font-weight: 700;
+}
+.bar-fill.c1 { background: linear-gradient(90deg, var(--rose-deep), var(--rose)); }
+.bar-fill.c2 { background: linear-gradient(90deg, var(--plum), var(--mauve)); }
+.bar-fill.c3 { background: linear-gradient(90deg, var(--terra), var(--warm)); }
+.bar-fill.c4 { background: linear-gradient(90deg, var(--sage-deep), var(--sage)); }
+.bar-fill.c5 { background: linear-gradient(90deg, var(--rose), var(--rose-glow)); }
+
+/* ── TOC ── */
+.toc {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 20px rgba(92,61,94,.06);
+  margin: 36px 0;
+}
+.toc h3 { margin-top: 0; color: var(--plum); }
+.toc-list {
+  list-style: none;
+  columns: 2;
+  column-gap: 32px;
+}
+.toc-list li {
+  padding: 7px 0;
+  font-size: 14px;
+  border-bottom: 1px solid var(--gray-light);
+}
+.toc-list li a {
+  color: var(--ink);
+  text-decoration: none;
+  transition: color .2s;
+}
+.toc-list li a:hover { color: var(--rose-deep); }
+.toc-list li .toc-num {
+  color: var(--rose);
+  font-weight: 700;
+  margin-right: 8px;
+  font-family: 'Noto Serif SC', serif;
+}
+
+/* ── Section alt bg ── */
+.bg-warm { background: var(--warm-light); }
+.bg-white { background: #fff; }
+
+/* ── Footer ── */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,.55);
+  padding: 40px 24px;
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.9;
+}
+footer strong { color: rgba(255,255,255,.85); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .tier-card { grid-template-columns: 1fr; }
+  .toc-list { columns: 1; }
+  .hero-stats { gap: 16px; }
+  .hero-stat { padding: 14px 20px; }
+  .hero-stat .num { font-size: 28px; }
+  section { padding: 48px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<header class="hero">
+  <div class="hero-eyebrow">全景研究报告 · 2026</div>
+  <h1>中国20–35岁女性<br><em>婚恋需求</em>全景报告</h1>
+  <p class="hero-sub">基于民政部、国家统计局、全国妇联、育娲人口等官方数据与学术调查<br>聚焦女性视角的结构性观察</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">610.6<small style="font-size:18px">万</small></span><span class="label">2024年结婚登记数</span></div>
+    <div class="hero-stat"><span class="num">30.1<small style="font-size:18px">岁</small></span><span class="label">上海女性初婚年龄</span></div>
+    <div class="hero-stat"><span class="num">72%</span><span class="label">认为婚姻非必经之路</span></div>
+    <div class="hero-stat"><span class="num">2.4<small style="font-size:18px">亿</small></span><span class="label">中国单身人口</span></div>
+  </div>
+  <div class="scroll-hint">▼ 向下滚动阅读</div>
+</header>
+
+<!-- ═══════════ TOC ═══════════ -->
+<section>
+<div class="container">
+  <div class="toc">
+    <h3>目 录</h3>
+    <ol class="toc-list">
+      <li><a href="#s1"><span class="toc-num">01</span>核心结论</a></li>
+      <li><a href="#s2"><span class="toc-num">02</span>结婚率与初婚年龄</a></li>
+      <li><a href="#s3"><span class="toc-num">03</span>为什么今天更难理解女性</a></li>
+      <li><a href="#s4"><span class="toc-num">04</span>六大底层需求</a></li>
+      <li><a href="#s5"><span class="toc-num">05</span>城市层级分析</a></li>
+      <li><a href="#s6"><span class="toc-num">06</span>教育与职业分层</a></li>
+      <li><a href="#s7"><span class="toc-num">07</span>婚恋态度分类</a></li>
+      <li><a href="#s8"><span class="toc-num">08</span>"条件"还是"人"</a></li>
+      <li><a href="#s9"><span class="toc-num">09</span>为什么"不想结婚"</a></li>
+      <li><a href="#s10"><span class="toc-num">10</span>相亲 vs 自然恋爱</a></li>
+      <li><a href="#s11"><span class="toc-num">11</span>男性吸引力重定义</a></li>
+      <li><a href="#s12"><span class="toc-num">12</span>需求地图总表</a></li>
+      <li><a href="#s13"><span class="toc-num">13</span>结语与展望</a></li>
+    </ol>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 01 核心结论 ═══════════ -->
+<section id="s1" class="bg-white">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第一章</div>
+  <h2>核心结论</h2>
+  <p>中国年轻女性的婚恋需求，正在从"条件匹配"转向"关系质量"，从"是否结婚"转向"结婚是否划算"。这不是情绪化的转向，而是一整套结构性数据支撑的结果。</p>
+
+  <div class="conclusion-grid">
+    <div class="conclusion-card">
+      <div class="card-num">01</div>
+      <h4>结婚不再是默认选项</h4>
+      <p>2024年粗结婚率跌破5‰，72%单身青年认为婚姻并非人生必经之路，较五年前上升23个百分点。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--plum);">
+      <div class="card-num">02</div>
+      <h4>择偶标准权重已重排</h4>
+      <p>道德品质、三观、性格、情绪稳定性全面超越收入、房产、外貌等传统硬指标。经济条件排第五位。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--sage);">
+      <div class="card-num">03</div>
+      <h4>高学历女性面临结构困境</h4>
+      <p>30岁+研究生学历女性未婚率约11%，远高于本科及以下5%。25-29岁硕士女性成婚率仅37%。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--terra);">
+      <div class="card-num">04</div>
+      <h4>城市决定完全不同的逻辑</h4>
+      <p>一线城市纠结"是否要婚姻"；县城体制内纠结"找不到对口男性"；农村女性大量上迁外嫁。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--mauve);">
+      <div class="card-num">05</div>
+      <h4>女性担忧已被精确量化</h4>
+      <p>"生育惩罚"达57-127万元；养育成本/人均GDP倍数6.3倍全球最高；女性每日家务时间为男性两倍。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--sage-deep);">
+      <div class="card-num">06</div>
+      <h4>东亚共性不可回避</h4>
+      <p>日本女性终身不婚率17.8%、韩国TFR 0.72、中国TFR 1.05——"不婚即不育"的刚性绑定让趋势几乎不可逆。</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 02 结婚率 ═══════════ -->
+<section id="s2">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第二章</div>
+  <h2>结婚登记数据：十一年腰斩</h2>
+  <p>2013年全国结婚登记1346.9万对，2024年仅610.6万对，创1980年以来最低记录。2024年同比下降20.5%。</p>
+
+  <div class="chart-row">
+    <div class="chart-box">
+      <h4>全国结婚登记数变化</h4>
+      <div class="chart-desc">单位：万对 | 数据来源：民政部</div>
+      <canvas id="chartMarriage"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>离婚登记数变化</h4>
+      <div class="chart-desc">单位：万对 | 2021年起实施离婚冷静期</div>
+      <canvas id="chartDivorce"></canvas>
+    </div>
+  </div>
+
+  <div class="highlight-banner">
+    <div class="container">
+      <span class="big-num">29.5<small style="font-size:36px">岁</small></span>
+      <div class="big-label">2024年上海女性初婚平均年龄</div>
+      <div class="big-sub">全国平均初婚年龄已从1990年的22岁推迟到2020年的28.67岁，一线城市突破30岁</div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-box">
+      <h4>东亚总和生育率对比</h4>
+      <div class="chart-desc">2023-2024年数据</div>
+      <canvas id="chartTFR"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>女性各学历段未婚率（30岁+）</h4>
+      <div class="chart-desc">数据来源：七普及CFPS</div>
+      <canvas id="chartEduUnmarried"></canvas>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 03 为什么更难理解 ═══════════ -->
+<section id="s3" class="bg-warm">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第三章</div>
+  <h2>为什么今天理解女性婚恋需求比过去更难</h2>
+
+  <div class="conclusion-grid">
+    <div class="conclusion-card" style="border-left-color:var(--plum);">
+      <h4>结婚行为频率下降一半</h4>
+      <p>选择结婚的人正在变得越来越特殊，沉默的大多数年轻女性正在暂缓或退出。用"什么人会结婚"反推"女性需要什么"，样本已严重偏离总体。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--sage);">
+      <h4>初婚年龄推迟到接近30岁</h4>
+      <p>分析窗口被拉长到32岁，容纳了完全不同的人生阶段。29.5岁和24岁的女性在经济独立度、社交网络、风险承受力上完全不可比。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--mauve);">
+      <h4>女性内部分化大于男女差异</h4>
+      <p>北京互联网硕士、江西县城教师、浙江自由职业者、上海新人——她们的婚恋担忧几乎没有任何交集。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--terra);">
+      <h4>信息环境完全变了</h4>
+      <p>一个25岁女性的婚姻判断已高度去中心化——她看到的是成千上万他人案例、具体法院判决、生育成本数字。</p>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-box">
+      <h4>高等教育性别结构</h4>
+      <div class="chart-desc">2023年高考女性本科录取占63%</div>
+      <canvas id="chartGenderEdu"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>适婚年龄人口占比下降</h4>
+      <div class="chart-desc">北京适婚人口占比十年下降10.8个百分点</div>
+      <canvas id="chartMarriageAge"></canvas>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 04 六大底层需求 ═══════════ -->
+<section id="s4" class="bg-white">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第四章</div>
+  <h2>女性婚恋需求的六个底层变量</h2>
+  <p>这六项带有优先顺序：<strong>当前面的变量不被满足，后面的条件几乎无意义</strong>。</p>
+
+  <div class="needs-grid">
+    <div class="need-card">
+      <div class="need-icon">🤝</div>
+      <h4>尊重</h4>
+      <p>不是口头客气，而是承认女性作为独立人格的选择权与边界。涵盖对工作、生活节奏、消费、身体、社交空间和婚育决策权的尊重。</p>
+      <span class="need-stat">95%女性认为夫妻应平等分担责任</span>
+    </div>
+    <div class="need-card">
+      <div class="need-icon">🛡️</div>
+      <h4>安全感</h4>
+      <p>情感安全（伴侣情绪稳定、不用猜来猜去）与现实安全（经济独立、人身安全）。未婚女性正在用购房替代婚姻来获取安全感。</p>
+      <span class="need-stat">36%女性认为房子比婚姻更有安全感</span>
+    </div>
+    <div class="need-card">
+      <div class="need-icon">💬</div>
+      <h4>情绪回应</h4>
+      <p>"被看见、被懂、被回应"。真实需求是伴侣能倾听、理解情绪、不急着压制或说教，冲突时不逃避不失控。</p>
+      <span class="need-stat">超四成女性希望伴侣"有安全感"</span>
+    </div>
+    <div class="need-card">
+      <div class="need-icon">⚖️</div>
+      <h4>平等协作</h4>
+      <p>已婚女性日均家务154分钟，约为男性两倍。0-17岁孩子日常照料76.1%由母亲承担。家是不是两个人共同的责任？</p>
+      <span class="need-stat">女性家务时间 ≈ 男性 × 2</span>
+    </div>
+    <div class="need-card">
+      <div class="need-icon">🎭</div>
+      <h4>精神契合</h4>
+      <p>审美、价值观、对世界的基本态度相通——"我不用伪装自己就可以和你在一起"。六成青年将道德品质列为首要择偶标准。</p>
+      <span class="need-stat">三观排择偶特质第一名(64.86%)</span>
+    </div>
+    <div class="need-card">
+      <div class="need-icon">📈</div>
+      <h4>成长性</h4>
+      <p>关系是否在进步、两个人是否会一起变成更好的人。高学历女性的核心逻辑：如果一段关系不能让我变更好，为什么进入？</p>
+      <span class="need-stat">"婚姻是锦上添花，不是雪中送炭"</span>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-box">
+      <h4>女性择偶特质偏好排序</h4>
+      <div class="chart-desc">数据来源：珍爱网×美团《95后单身人群白皮书》</div>
+      <canvas id="chartMatePrefer"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>家务分工性别差异</h4>
+      <div class="chart-desc">数据来源：第四期中国妇女社会地位调查</div>
+      <canvas id="chartHousework"></canvas>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 05 城市层级 ═══════════ -->
+<section id="s5">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第五章</div>
+  <h2>按城市层级分析</h2>
+  <p>一线、新一线、三四线、县城的女性，活在几乎是<strong>四个不同的婚恋市场</strong>里。</p>
+
+  <div class="tier-section">
+    <div class="tier-card">
+      <div><div class="tier-label">一线城市<br><small style="font-weight:400;font-size:12px;">北上广深</small></div></div>
+      <div class="tier-content">
+        <h4>经济独立最高，婚恋意愿最低，成本-收益计算最精细</h4>
+        <div class="tier-data">
+          <div class="td-item"><strong>30.1岁</strong>上海初婚年龄</div>
+          <div class="td-item"><strong>-13.5%</strong>上海结婚同比</div>
+          <div class="td-item"><strong>122万</strong>北京生育惩罚</div>
+          <div class="td-item"><strong>101万</strong>上海养育成本</div>
+        </div>
+        <p>核心需求排序：<strong>精神契合 ＞ 平等协作 ＞ 情绪回应 ＞ 成长性</strong>。经济条件不在前六位——她们自己已经足够，对方只要"不拉低"即可。</p>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div><div class="tier-label">新一线/二线<br><small style="font-weight:400;font-size:12px;">成杭武宁等</small></div></div>
+      <div class="tier-content">
+        <h4>结构性失衡最严重：高学历女性供给远大于同层级男性</h4>
+        <div class="tier-data">
+          <div class="td-item"><strong>1:43</strong>成都相亲男女比</div>
+          <div class="td-item"><strong>63%</strong>D县体制新招女性</div>
+          <div class="td-item"><strong>100万+</strong>多城未婚女性</div>
+        </div>
+        <p>最庞大的"有意愿结婚但暂时找不到合适对象"群体。更在意"这个人是不是让我觉得舒服"而非"有面子"。</p>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div><div class="tier-label">三四线城市<br><small style="font-weight:400;font-size:12px;">观念变化最剧烈</small></div></div>
+      <div class="tier-content">
+        <h4>保留熟人社会压力，同时接触到一线城市的观念</h4>
+        <div class="tier-data">
+          <div class="td-item"><strong>22万</strong>浙江彩礼均值</div>
+          <div class="td-item"><strong>19万</strong>福建彩礼均值</div>
+          <div class="td-item"><strong>8省</strong>彩礼超10万</div>
+        </div>
+        <p>"两面不讨好"：家庭用传统标准要求早婚、彩礼；自己更接近独立观念。承受的心理拉扯最大。</p>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div><div class="tier-label">县城/农村<br><small style="font-weight:400;font-size:12px;">最具戏剧性</small></div></div>
+      <div class="tier-content">
+        <h4>"县域体制内剩女"与农村"婚姻梯度流动"</h4>
+        <div class="tier-data">
+          <div class="td-item"><strong>10%+</strong>30+未婚体制内女性</div>
+          <div class="td-item"><strong>13:2</strong>农村大龄未婚男女比</div>
+          <div class="td-item"><strong>60%</strong>县城男客户学历大专</div>
+        </div>
+        <p>一线是"女性太独立男性不够精英"，县城是"女性太优秀男性太普通"——完全对称的困境。</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 06 教育职业 ═══════════ -->
+<section id="s6" class="bg-warm">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第六章</div>
+  <h2>按教育与职业阶层分析</h2>
+
+  <div class="chart-row">
+    <div class="chart-box">
+      <h4>不同学历女性25-29岁成婚率</h4>
+      <div class="chart-desc">数据来源：六普/七普/CFPS</div>
+      <canvas id="chartMarriageByEdu"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>生育惩罚金额（按城市）</h4>
+      <div class="chart-desc">女性因生育造成的终身收入损失 | 万元</div>
+      <canvas id="chartBirthPenalty"></canvas>
+    </div>
+  </div>
+
+  <div class="conclusion-grid">
+    <div class="conclusion-card" style="border-left-color:var(--rose-deep);">
+      <h4>高学历职场女性</h4>
+      <p>婚姻是锦上添花，非必需品。30岁+研究生女性未婚率11%。CFPS数据发现高学历女性单身状态显著提升主观幸福感。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--plum);">
+      <h4>普通学历普通职业女性</h4>
+      <p>数量最大的群体。核心：稳定、合得来、双方家庭相处得了。彩礼、婚房、孩子谁带是高频决策点。82.7%全职妈妈有再就业打算。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--sage);">
+      <h4>高学历但职业不稳定女性</h4>
+      <p>"身份标签高于实际收入"——硕博自由职业、考公循环。需求核心：理解与支持权重极高，希望伴侣看见她的潜力而非短期状态。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--terra);">
+      <h4>家庭导向型女性</h4>
+      <p>不是"想当家庭主妇"，而是把家庭质量放在事业之前。关键需求：伴侣愿意真正参与家庭，对方是否真正把家当回事。</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 07 婚恋态度 ═══════════ -->
+<section id="s7" class="bg-white">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第七章</div>
+  <h2>按婚恋态度分类</h2>
+  <p>四个类型涵盖了2026年绝大多数20–35岁中国女性。</p>
+
+  <div class="attitude-grid">
+    <div class="attitude-card">
+      <div class="att-emoji">🔍</div>
+      <h4>主动想结婚<br>找不到合适对象</h4>
+      <p>县城体制内和一二线高学历女性的主流状态。准备好了，但找不到让自己愿意走进去的那扇门。</p>
+    </div>
+    <div class="attitude-card">
+      <div class="att-emoji">🐢</div>
+      <h4>观望慢热<br>防御型</h4>
+      <p>数量最大。33.63%佛系脱单，28.82%"绝不将就"。"防御性的开放"——愿意接受可能性，但高度戒备。</p>
+    </div>
+    <div class="attitude-card">
+      <div class="att-emoji">🧘</div>
+      <h4>婚姻冷感<br>不婚倾向</h4>
+      <p>主动不婚女性29%。首因：个人意识觉醒(44%)、经济压力(44%)。不是敌视婚姻，而是觉得不值得。</p>
+    </div>
+    <div class="attitude-card">
+      <div class="att-emoji">🔄</div>
+      <h4>经历失败关系<br>重新判断</h4>
+      <p>2024年离婚262.1万对，群体逐年扩大。拥有最明确的"负面清单"，个人经历通过社交媒体成为年轻女性的参照。</p>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    她们依然需要爱，但比过去更需要<br>一个不会吞掉自己生活的人
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 08 条件vs人 ═══════════ -->
+<section id="s8">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第八章</div>
+  <h2>女性在意的是"条件"还是"人"？</h2>
+  <p>更准确的描述是：<strong>条件是筛选门槛，人是最终决策</strong>。条件决定你能否进入候选池，不能决定你能否被选中。</p>
+
+  <div class="chart-box" style="margin:28px 0;">
+    <h4>女性择偶特质重要性排序</h4>
+    <div class="chart-desc">经济条件排第五——与十年前"经济是首位"的刻板印象相差极大</div>
+    <div class="bar-compare">
+      <div class="bar-item">
+        <div class="bar-label"><span>三观契合</span><span>64.86%</span></div>
+        <div class="bar-track"><div class="bar-fill c1" style="width:64.86%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>性格</span><span>51.92%</span></div>
+        <div class="bar-track"><div class="bar-fill c2" style="width:51.92%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>长相</span><span>43.59%</span></div>
+        <div class="bar-track"><div class="bar-fill c3" style="width:43.59%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>个人能力</span><span>31.31%</span></div>
+        <div class="bar-track"><div class="bar-fill c4" style="width:31.31%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>经济条件</span><span>28.40%</span></div>
+        <div class="bar-track"><div class="bar-fill c5" style="width:28.40%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>身材</span><span>20.87%</span></div>
+        <div class="bar-track"><div class="bar-fill c2" style="width:20.87%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 09 为什么不想结婚 ═══════════ -->
+<section id="s9" class="bg-warm">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第九章</div>
+  <h2>为什么很多女性觉得"不想结婚"</h2>
+  <p>五个具体层面的综合作用，而非简单的"女性越来越挑"。</p>
+
+  <div class="chart-row">
+    <div class="chart-box">
+      <h4>婚姻的具体成本量化</h4>
+      <div class="chart-desc">女性面对的一组非常具体的数字</div>
+      <canvas id="chartCosts"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>30+单身女性生活态度</h4>
+      <div class="chart-desc">数据来源：珍爱网×中国妇女报</div>
+      <canvas id="chartAttitude"></canvas>
+    </div>
+  </div>
+
+  <div class="conclusion-grid" style="margin-top:28px;">
+    <div class="conclusion-card" style="border-left-color:var(--terra);">
+      <h4>恋爱本身的成本上升</h4>
+      <p>社交媒体时代恋爱是高度暴露、密集互动、情绪易耗的过程。"低质量的恋爱不如高质量的单身"话题参与超165万。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--plum);">
+      <h4>婚姻风险被精确量化</h4>
+      <p>生育惩罚57-127万元、家务每天120分钟、孩子照料76.1%母亲承担、产后抑郁14.7%、城镇养育66.7万。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--sage);">
+      <h4>法律保障被认为不对称</h4>
+      <p>家务补偿全部支持率仅12%，判决多低于3万元。女性认为"进入容易、退出代价大"。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--mauve);">
+      <h4>男性供给端质量焦虑</h4>
+      <p>学历、收入、观念、情绪、自理能力——五项同时达标的池子正在变小。不是"找不到人"，而是"找不到值得"。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--rose);">
+      <h4>不婚的社会成本在下降</h4>
+      <p>超七成遇催婚、近九成不以为然。40.84%对现状满意。"不结"的边际成本降低了。</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 10 相亲vs自然恋爱 ═══════════ -->
+<section id="s10" class="bg-white">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第十章</div>
+  <h2>相亲市场与自然恋爱</h2>
+
+  <div class="chart-row">
+    <div class="chart-box">
+      <h4>找对象的主要方式</h4>
+      <div class="chart-desc">数据来源：艾媒咨询2024</div>
+      <canvas id="chartDatingMethod"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>婚恋社交行业市场规模</h4>
+      <div class="chart-desc">2014-2023年 | 单位：亿元</div>
+      <canvas id="chartMarketSize"></canvas>
+    </div>
+  </div>
+
+  <div class="conclusion-grid">
+    <div class="conclusion-card" style="border-left-color:var(--terra);">
+      <h4>相亲 = "条件市场"</h4>
+      <p>先用条件筛选再见面谈感觉。效率看似高实则低——女性真正在乎的三观、情绪、成长性无法在45分钟中判断。20.88%因脱单困难常焦虑。</p>
+    </div>
+    <div class="conclusion-card" style="border-left-color:var(--sage);">
+      <h4>自然恋爱 = "关系市场"</h4>
+      <p>先有接触、共同经历、情感互动，再决定进入关系。对条件容忍度更高。但城市化、996、社交封闭让"自然遇到合适的人"越来越难。</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 11 男性吸引力 ═══════════ -->
+<section id="s11">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第十一章</div>
+  <h2>对男性吸引力的重新定义</h2>
+  <p>2026年，吸引力已经不能只靠"有编制有房学历高"来解释。这些是基础盘，而不是决定性优势。</p>
+
+  <div class="needs-grid">
+    <div class="need-card">
+      <div class="need-icon">🧘</div>
+      <h4>情绪稳定性</h4>
+      <p>不发脾气、不冷暴力、不让女性"踩地雷"生活。核心是情绪可预测。</p>
+    </div>
+    <div class="need-card">
+      <div class="need-icon">🗣️</div>
+      <h4>表达与沟通</h4>
+      <p>愿意说清楚想法、愿意听、会道歉、会解决冲突。"消息秒回""擅长提供情绪价值"是高频正面标签。</p>
+    </div>
+    <div class="need-card">
+      <div class="need-icon">⚖️</div>
+      <h4>真正的平等意识</h4>
+      <p>不是嘴上说"男女平等"，而是在家务、育儿、财务、重大事项上具体落实。</p>
+    </div>
+    <div class="need-card">
+      <div class="need-icon">🏠</div>
+      <h4>生活自理与独立</h4>
+      <p>不是"妈宝"，不需要母亲或妻子替代母亲才能生活。生活完全依赖父母是硬伤。</p>
+    </div>
+    <div class="need-card">
+      <div class="need-icon">🌱</div>
+      <h4>成长意愿</h4>
+      <p>认真对待工作、愿意学习、能规划未来。方向感和执行力比现在的收入更重要。</p>
+    </div>
+    <div class="need-card">
+      <div class="need-icon">💼</div>
+      <h4>对她事业的真正支持</h4>
+      <p>不是"我赚得多你可以全职"，而是支持她保持事业、共同承担家庭。</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 12 需求地图总表 ═══════════ -->
+<section id="s12" class="bg-warm">
+<div class="container">
+  <div class="section-divider"></div>
+  <div class="section-num">第十二章</div>
+  <h2>实操版女性需求地图</h2>
+  <p>尊重、情绪回应、平等协作在<strong>所有群体</strong>中稳居前三——这是2026年中国年轻女性最底层的共识。</p>
+
+  <div style="overflow-x:auto;">
+  <table class="report-table">
+    <thead>
+      <tr>
+        <th style="width:15%;">群体类型</th>
+        <th style="width:22%;">核心诉求</th>
+        <th style="width:22%;">最在意</th>
+        <th style="width:20%;">最担心</th>
+        <th style="width:21%;">红线</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>一线高学历职场</strong></td>
+        <td>精神契合、成长同步、不拉低生活质量</td>
+        <td><span class="tag tag-red">三观</span><span class="tag tag-blue">事业支持</span><span class="tag tag-green">情绪稳定</span></td>
+        <td>生育惩罚、职业中断、婆媳干预</td>
+        <td><span class="tag tag-red">经济算计</span><span class="tag tag-red">爹味</span><span class="tag tag-red">妈宝</span></td>
+      </tr>
+      <tr>
+        <td><strong>新一线/二线职场</strong></td>
+        <td>稳定关系、平等协作、有生活质量</td>
+        <td><span class="tag tag-blue">性格</span><span class="tag tag-green">责任感</span><span class="tag tag-purple">家庭观念</span></td>
+        <td>家务不分担、冷暴力</td>
+        <td><span class="tag tag-red">大男子主义</span><span class="tag tag-red">不尊重</span></td>
+      </tr>
+      <tr>
+        <td><strong>三四线城市女性</strong></td>
+        <td>稳定靠谱、家庭和睦、经济可预期</td>
+        <td><span class="tag tag-green">人品</span><span class="tag tag-blue">合得来</span><span class="tag tag-purple">双方家庭</span></td>
+        <td>彩礼/婆媳纠纷、家暴</td>
+        <td><span class="tag tag-red">不负责任</span><span class="tag tag-red">原生家庭问题</span></td>
+      </tr>
+      <tr>
+        <td><strong>县城体制内女性</strong></td>
+        <td>对等层级伴侣、体面生活</td>
+        <td><span class="tag tag-blue">职业匹配</span><span class="tag tag-green">人品</span><span class="tag tag-purple">父母接纳</span></td>
+        <td>找不到对口男性</td>
+        <td><span class="tag tag-red">明显"下嫁"</span><span class="tag tag-red">熟人舆论</span></td>
+      </tr>
+      <tr>
+        <td><strong>高学历职业不稳定</strong></td>
+        <td>支持理解、情绪互补</td>
+        <td><span class="tag tag-purple">精神契合</span><span class="tag tag-blue">理解选择</span></td>
+        <td>失去主体性</td>
+        <td><span class="tag tag-red">否定事业</span><span class="tag tag-red">家长式介入</span></td>
+      </tr>
+      <tr>
+        <td><strong>家庭导向型女性</strong></td>
+        <td>共建家庭、稳定长期投入</td>
+        <td><span class="tag tag-green">成熟</span><span class="tag tag-purple">家庭观念</span><span class="tag tag-blue">经济可预期</span></td>
+        <td>丧偶式育儿、出轨</td>
+        <td><span class="tag tag-red">不把家庭当回事</span></td>
+      </tr>
+      <tr>
+        <td><strong>不婚倾向女性</strong></td>
+        <td>保持关系自主</td>
+        <td><span class="tag tag-purple">关系质量＞形式</span></td>
+        <td>被规训</td>
+        <td><span class="tag tag-red">以婚姻为筹码的压力</span></td>
+      </tr>
+      <tr>
+        <td><strong>离异/失败关系后</strong></td>
+        <td>风险可控、法律保障</td>
+        <td><span class="tag tag-green">人品</span><span class="tag tag-blue">透明</span><span class="tag tag-purple">承诺可兑现</span></td>
+        <td>重复创伤</td>
+        <td><span class="tag tag-red">重复前任问题的信号</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ 13 结语 ═══════════ -->
+<section id="s13" style="background:linear-gradient(155deg, #2d2a32 0%, #5c3d5e 40%, #8e3b4a 100%); color:#fff;">
+<div class="container" style="padding-top:60px;padding-bottom:60px;">
+  <div class="section-divider" style="background:rgba(255,255,255,.3);"></div>
+  <div class="section-num" style="color:rgba(255,255,255,.5);">结语</div>
+  <h2 style="color:#fff;">她们不需要被说服去结婚<br>也不需要被说服去不结婚</h2>
+  <p style="color:rgba(255,255,255,.78);font-size:16px;max-width:760px;line-height:2;">
+    这一代20–35岁中国女性正在用自己能掌握的一切资源——金钱、知识、时间、朋友网络、法律工具——建立一个不必依赖婚姻也能过得好的生活基础。当这个基础存在后，婚姻必须是"锦上添花"才会被接受。
+  </p>
+  <p style="color:rgba(255,255,255,.78);font-size:16px;max-width:760px;line-height:2;">
+    她们需要的是<strong style="color:#fff;">一个值得让她们认真考虑的选项</strong>。如果这个选项还不存在，那就是数据告诉所有人的答案。
+  </p>
+  <div style="display:flex;gap:28px;margin-top:40px;flex-wrap:wrap;">
+    <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:14px;padding:18px 24px;border:1px solid rgba(255,255,255,.1);">
+      <div style="font-family:'Noto Serif SC';font-size:32px;font-weight:900;">610.6<small style="font-size:14px">万对</small></div>
+      <div style="font-size:12px;opacity:.55;">2024年结婚登记</div>
+    </div>
+    <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:14px;padding:18px 24px;border:1px solid rgba(255,255,255,.1);">
+      <div style="font-family:'Noto Serif SC';font-size:32px;font-weight:900;">1.05</div>
+      <div style="font-size:12px;opacity:.55;">总和生育率</div>
+    </div>
+    <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:14px;padding:18px 24px;border:1px solid rgba(255,255,255,.1);">
+      <div style="font-family:'Noto Serif SC';font-size:32px;font-weight:900;">72%</div>
+      <div style="font-size:12px;opacity:.55;">认为婚姻非必经</div>
+    </div>
+    <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:14px;padding:18px 24px;border:1px solid rgba(255,255,255,.1);">
+      <div style="font-family:'Noto Serif SC';font-size:32px;font-weight:900;">40.84%</div>
+      <div style="font-size:12px;opacity:.55;">对单身现状满意</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="container">
+    <strong>2026年中国20–35岁女性婚恋需求全景报告</strong><br>
+    数据来源：民政部、国家统计局、第七次人口普查、全国妇联《第四期中国妇女社会地位调查》、中国青少年研究中心、<br>
+    育娲人口《中国生育成本报告2024》、艾媒咨询、珍爱网、Soul App×上海大学、智联招聘、贝壳研究院等<br>
+    <span style="opacity:.4;">本报告仅供研究参考，部分数据存在口径差异，已在正文注明</span>
+  </div>
+</footer>
+
+<script>
+Chart.defaults.font.family = "'Noto Sans SC', sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#666';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyleWidth = 10;
+
+// Palette for charts
+const P = {
+  rose:'#b5646a', roseDeep:'#8e3b4a', roseSoft:'#f2e0df', roseGlow:'#d4949a',
+  plum:'#5c3d5e', plumLight:'#ede4ee',
+  sage:'#7a9a7e', sageDeep:'#4d7050', sageLight:'#e6f0e7',
+  terra:'#c4836a', terraLight:'#f5e8e1',
+  mauve:'#9b7ea6', warm:'#d9b89c',
+};
+
+new Chart(document.getElementById('chartMarriage'), {
+  type:'bar',
+  data:{
+    labels:['2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'],
+    datasets:[{
+      label:'结婚登记（万对）',
+      data:[1346.9,1306.7,1224.7,1142.8,1063.1,1013.9,947.1,814.3,763.6,683.5,768.0,610.6],
+      backgroundColor:ctx=>{const v=ctx.raw;return v<700?P.roseDeep:v<900?P.terra:P.plum;},
+      borderRadius:6,
+    }]
+  },
+  options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'#f0ebe3'}},x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartDivorce'), {
+  type:'line',
+  data:{
+    labels:['2017','2018','2019','2020','2021','2022','2023','2024'],
+    datasets:[{
+      label:'离婚登记（万对）',
+      data:[437.4,446.1,470.1,433.9,283.9,210.0,259.3,262.1],
+      borderColor:P.rose,
+      backgroundColor:'rgba(181,100,106,.1)',
+      fill:true, tension:.4, pointRadius:5, pointBackgroundColor:P.roseDeep,
+    }]
+  },
+  options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:'#f0ebe3'}},x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartTFR'), {
+  type:'bar',
+  data:{
+    labels:['韩国','新加坡','中国','日本','OECD平均'],
+    datasets:[{
+      label:'总和生育率',
+      data:[0.72,0.97,1.05,1.20,1.50],
+      backgroundColor:[P.roseDeep,P.terra,P.rose,P.plum,P.sage],
+      borderRadius:6,
+    }]
+  },
+  options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{max:2.1,grid:{color:'#f0ebe3'}},y:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartEduUnmarried'), {
+  type:'bar',
+  data:{
+    labels:['初中及以下','高中/中专','大专','本科','研究生'],
+    datasets:[{label:'30岁+未婚率',data:[2,3,4,5,11],
+      backgroundColor:[P.sage,P.mauve,P.terra,P.rose,P.roseDeep],borderRadius:6}]
+  },
+  options:{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'%'},grid:{color:'#f0ebe3'}},x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartGenderEdu'), {
+  type:'doughnut',
+  data:{labels:['女性本科新生','男性本科新生'],datasets:[{data:[63,37],backgroundColor:[P.rose,P.plum],borderWidth:0}]},
+  options:{plugins:{legend:{position:'bottom'}},cutout:'60%'}
+});
+
+new Chart(document.getElementById('chartMarriageAge'), {
+  type:'bar',
+  data:{labels:['2013年北京','2023年北京'],datasets:[{label:'适婚人口占比',data:[43.6,32.8],backgroundColor:[P.plum,P.roseDeep],borderRadius:6}]},
+  options:{plugins:{legend:{display:false}},scales:{y:{max:50,ticks:{callback:v=>v+'%'},grid:{color:'#f0ebe3'}},x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartMatePrefer'), {
+  type:'radar',
+  data:{
+    labels:['三观','性格','长相','个人能力','经济条件','身材'],
+    datasets:[{label:'女性偏好',data:[64.86,51.92,43.59,31.31,28.40,20.87],
+      borderColor:P.roseDeep,backgroundColor:'rgba(142,59,74,.12)',pointBackgroundColor:P.roseDeep}]
+  },
+  options:{scales:{r:{beginAtZero:true,max:70,ticks:{stepSize:20},grid:{color:'rgba(92,61,94,.1)'},pointLabels:{color:'#555'}}}}
+});
+
+new Chart(document.getElementById('chartHousework'), {
+  type:'bar',
+  data:{
+    labels:['日常家务(分钟/天)','0-17岁照料(%)','辅导作业(%)','接送孩子(%)'],
+    datasets:[
+      {label:'女性',data:[154,76.1,67.5,63.6],backgroundColor:P.rose,borderRadius:4},
+      {label:'男性',data:[80,23.9,32.5,36.4],backgroundColor:P.plum,borderRadius:4},
+    ]
+  },
+  options:{plugins:{legend:{position:'top'}},scales:{y:{grid:{color:'#f0ebe3'}},x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartMarriageByEdu'), {
+  type:'bar',
+  data:{
+    labels:['初中','高中','大专','本科','硕士'],
+    datasets:[{label:'25-29岁女性成婚率',data:[84,72,58,48,37],
+      backgroundColor:[P.sage,P.mauve,P.terra,P.rose,P.roseDeep],borderRadius:6}]
+  },
+  options:{plugins:{legend:{display:false}},scales:{y:{max:100,ticks:{callback:v=>v+'%'},grid:{color:'#f0ebe3'}},x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartBirthPenalty'), {
+  type:'bar',
+  data:{
+    labels:['上海','北京','全国均值','农村'],
+    datasets:[{label:'生育惩罚（万元）',data:[127,122,57,30],backgroundColor:[P.roseDeep,P.rose,P.terra,P.plum],borderRadius:6}]
+  },
+  options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:'#f0ebe3'}},x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartCosts'), {
+  type:'bar',
+  data:{
+    labels:['上海养育0-17岁','北京养育0-17岁','北京生育惩罚','女性年收入降幅','养育/人均GDP倍数'],
+    datasets:[{data:[101,93.6,122,20,6.3],backgroundColor:[P.roseDeep,P.rose,P.terra,P.mauve,P.plum],borderRadius:6}]
+  },
+  options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const u=['万元','万元','万元','%','倍'];return ctx.raw+u[ctx.dataIndex];}}}},scales:{x:{grid:{color:'#f0ebe3'}},y:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartAttitude'), {
+  type:'doughnut',
+  data:{labels:['对现状满意','佛系脱单','绝不将就','其他'],datasets:[{data:[40.84,33.63,28.82,10],backgroundColor:[P.sage,P.mauve,P.rose,P.warm],borderWidth:0}]},
+  options:{plugins:{legend:{position:'bottom'}},cutout:'55%'}
+});
+
+new Chart(document.getElementById('chartDatingMethod'), {
+  type:'bar',
+  data:{
+    labels:['亲友介绍','线上结识','婚恋平台','同事/同学','线下活动'],
+    datasets:[{label:'占比',data:[45.2,42.1,40.5,28.3,15.7],backgroundColor:[P.plum,P.mauve,P.rose,P.terra,P.sage],borderRadius:6}]
+  },
+  options:{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'%'},grid:{color:'#f0ebe3'}},x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartMarketSize'), {
+  type:'line',
+  data:{
+    labels:['2014','2016','2018','2020','2022','2023'],
+    datasets:[{label:'市场规模（亿元）',data:[26.9,40.5,55.3,70.2,85.6,93.8],
+      borderColor:P.roseDeep,backgroundColor:'rgba(142,59,74,.08)',fill:true,tension:.4,pointRadius:5,pointBackgroundColor:P.roseDeep}]
+  },
+  options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:'#f0ebe3'}},x:{grid:{display:false}}}}
+});
+</script>
+
+</body>
+</html>
