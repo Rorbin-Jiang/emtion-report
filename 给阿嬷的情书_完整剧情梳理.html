@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>给阿嬷的情书 · 完整剧情梳理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #F7F2EB;
+    --bg-warm: #F0E8DA;
+    --bg-paper: #FBF8F3;
+    --bg-dark: #2C2418;
+    --text-primary: #3B3024;
+    --text-secondary: #6B5D4F;
+    --text-light: #9B8E7E;
+    --accent-kapok: #C84B31;
+    --accent-kapok-light: #E8734F;
+    --accent-olive: #5B7553;
+    --accent-olive-light: #7A9970;
+    --accent-gold: #C9A96E;
+    --accent-gold-light: #E0C992;
+    --border-light: #DDD5C8;
+    --shadow-warm: rgba(60, 48, 30, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    font-family: 'Noto Serif SC', serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-dark);
+    overflow: hidden;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(200, 75, 49, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(201, 169, 110, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(91, 117, 83, 0.08) 0%, transparent 50%);
+  }
+
+  .hero-deco {
+    position: absolute;
+    font-size: 15rem;
+    opacity: 0.03;
+    color: #fff;
+    font-family: 'ZCOOL XiaoWei', serif;
+    user-select: none;
+    pointer-events: none;
+  }
+  .hero-deco.left { top: 10%; left: -2%; transform: rotate(-8deg); }
+  .hero-deco.right { bottom: 5%; right: -2%; transform: rotate(5deg); }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+
+  .hero-subtitle {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    color: #FBF8F3;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.6s forwards;
+  }
+
+  .hero-title-en {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--accent-gold-light);
+    letter-spacing: 0.3em;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.8s forwards;
+  }
+
+  .hero-quote {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(251, 248, 243, 0.7);
+    line-height: 2;
+    max-width: 500px;
+    margin: 0 auto 3rem;
+    opacity: 0;
+    animation: fadeUp 1s 1s forwards;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.8rem;
+    color: rgba(251, 248, 243, 0.45);
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+  }
+
+  .hero-meta span { white-space: nowrap; }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(251, 248, 243, 0.25);
+    font-size: 0.75rem;
+    font-family: 'Noto Sans SC', sans-serif;
+    letter-spacing: 0.2em;
+    opacity: 0;
+    animation: fadeUp 1s 1.5s forwards;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: rgba(251, 248, 243, 0.2);
+    margin: 0.8rem auto 0;
+    animation: scrollLine 2s infinite;
+  }
+
+  /* ===== NAVIGATION ===== */
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247, 242, 235, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+    padding: 0.8rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-bar a {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .nav-bar a:hover {
+    color: var(--accent-kapok);
+    background: rgba(200, 75, 49, 0.06);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .content-wrapper {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ===== ACT SECTIONS ===== */
+  .act {
+    padding: 5rem 0 3rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .act:last-of-type { border-bottom: none; }
+
+  .act-number {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--accent-kapok);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .act-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .act-time {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  .act p {
+    font-size: 1rem;
+    margin-bottom: 1.4rem;
+    text-align: justify;
+    font-weight: 300;
+  }
+
+  .act h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 2.5rem 0 1rem;
+    padding-left: 0.8rem;
+    border-left: 3px solid var(--accent-kapok);
+  }
+
+  /* ===== BLOCKQUOTES (侨批) ===== */
+  .qiaobi {
+    position: relative;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-light);
+    padding: 1.8rem 2rem;
+    margin: 2rem 0;
+    font-size: 0.95rem;
+    line-height: 2.1;
+    color: var(--text-secondary);
+    font-weight: 400;
+    border-radius: 2px;
+    box-shadow: 0 2px 20px var(--shadow-warm);
+  }
+  .qiaobi::before {
+    content: '批';
+    position: absolute;
+    top: -0.6rem;
+    right: 1.5rem;
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 0.75rem;
+    color: var(--accent-kapok);
+    background: var(--bg-primary);
+    padding: 0 0.6rem;
+    letter-spacing: 0.1em;
+  }
+  .qiaobi p { margin-bottom: 0.6rem; text-align: left; }
+  .qiaobi p:last-child { margin-bottom: 0; }
+  .qiaobi .sign {
+    text-align: right;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    margin-top: 0.8rem;
+  }
+
+  /* ===== HIGHLIGHT BOXES ===== */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(200,75,49,0.04), rgba(201,169,110,0.06));
+    border-left: 3px solid var(--accent-gold);
+    padding: 1.3rem 1.5rem;
+    margin: 1.8rem 0;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .deleted-scene {
+    background: rgba(91, 117, 83, 0.05);
+    border-left: 3px solid var(--accent-olive);
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    border-radius: 0 4px 4px 0;
+  }
+  .deleted-scene .label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-olive);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  /* ===== IMAGE PLACEHOLDERS ===== */
+  .scene-image {
+    width: 100%;
+    margin: 2rem 0;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px var(--shadow-warm);
+  }
+  .scene-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .scene-image .caption {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    padding: 0.8rem 1rem;
+    background: var(--bg-paper);
+    text-align: center;
+  }
+
+  /* ===== APPENDIX ===== */
+  .appendix {
+    padding: 4rem 0 3rem;
+    border-top: 2px solid var(--border-light);
+  }
+
+  .appendix-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .symbol-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .symbol-card {
+    background: var(--bg-paper);
+    border: 1px solid var(--border-light);
+    padding: 1.5rem;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .symbol-card .icon {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .symbol-card h4 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--text-primary);
+  }
+  .symbol-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .deleted-list {
+    counter-reset: deleted;
+    list-style: none;
+    padding: 0;
+  }
+  .deleted-list li {
+    counter-increment: deleted;
+    padding: 1.2rem 0 1.2rem 2.5rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+  }
+  .deleted-list li:last-child { border-bottom: none; }
+  .deleted-list li::before {
+    content: counter(deleted);
+    position: absolute;
+    left: 0;
+    top: 1.2rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: var(--accent-olive);
+    color: #fff;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .deleted-list li strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--bg-dark);
+    color: rgba(251, 248, 243, 0.4);
+    text-align: center;
+    padding: 4rem 2rem;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.8rem;
+    line-height: 2;
+  }
+  .footer .closing-quote {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1.3rem;
+    color: rgba(251, 248, 243, 0.65);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    line-height: 1.8;
+  }
+
+  /* ===== DECORATIVE DIVIDERS ===== */
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 3rem 0;
+    color: var(--accent-gold);
+    font-size: 0.8rem;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-light);
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollLine {
+    0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+    100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .content-wrapper { padding: 0 1.2rem; }
+    .act { padding: 3rem 0 2rem; }
+    .qiaobi { padding: 1.3rem 1.2rem; }
+    .nav-bar { padding: 0.6rem 1rem; gap: 0.1rem; }
+    .nav-bar a { font-size: 0.65rem; padding: 0.25rem 0.45rem; }
+    .symbol-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-deco left">批</div>
+  <div class="hero-deco right">情</div>
+  <div class="hero-content">
+    <div class="hero-subtitle">完整剧情梳理</div>
+    <h1 class="hero-title">给阿嬷的情书</h1>
+    <div class="hero-title-en">DEAR YOU · 2026</div>
+    <p class="hero-quote">
+      江海万里，心中念你，便不觉遥远。<br>
+      纸短情长，伏惟珍重。
+    </p>
+    <div class="hero-meta">
+      <span>导演：蓝鸿春</span>
+      <span>豆瓣 9.1 分</span>
+      <span>118 分钟</span>
+      <span>潮汕话</span>
+      <span>票房破 3 亿</span>
+    </div>
+  </div>
+  <div class="hero-scroll">向下阅读</div>
+</section>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <a href="#act1">壹 · 寻亲</a>
+  <a href="#act2">贰 · 爱情</a>
+  <a href="#act3">叁 · 暹罗</a>
+  <a href="#act4">肆 · 殒命</a>
+  <a href="#act5">伍 · 守护</a>
+  <a href="#act6">陆 · 误会</a>
+  <a href="#act7">柒 · 真相</a>
+  <a href="#act8">捌 · 橄榄</a>
+  <a href="#act9">玖 · 重逢</a>
+  <a href="#appendix1">意象</a>
+  <a href="#appendix2">删减</a>
+  <a href="#appendix3">幕后</a>
+</nav>
+
+<div class="content-wrapper">
+
+<!-- ACT 1 -->
+<section class="act" id="act1">
+  <div class="act-number">第一幕</div>
+  <div class="act-title">晓伟欠债寻亲</div>
+  <div class="act-time">2018年 · 中国潮汕</div>
+
+  <p>晓伟是郑木生与叶淑柔的孙子。淑柔此时已88岁。在给阿嬷过八十八岁生日的机会上，晓伟找到了当年阿公木生从泰国寄给阿嬷淑柔的侨批。</p>
+
+  <p>晓伟目前欠债五百万，被追债。他在叔叔的怂恿下，得知泰国有很多以"木生"命名的中学，推断阿公在泰国发了大财，是大富翁。他决定瞒着家人远赴泰国寻亲，打算认亲分家产。</p>
+
+  <p>淑柔本人不赞成孙子和儿子去泰国找"有钱的祖父"，她有自己心中的道义。</p>
+
+  <div class="highlight-box">
+    <strong>家族流传的"官方版本"：</strong>郑木生早已在泰国再婚、发迹，成了"忘了家乡"的南洋富商。淑柔因此与他断了明面联系，只守着那些侨批，在故土独自老去。
+  </div>
+</section>
+
+<!-- ACT 2 -->
+<section class="act" id="act2">
+  <div class="act-number">第二幕</div>
+  <div class="act-title">木生与淑柔的爱情</div>
+  <div class="act-time">约1940年代 · 中国潮汕</div>
+
+  <h3>初遇与一见钟情</h3>
+  <p>郑木生是穷小子，叶淑柔是大地主的女儿。木生对淑柔一见钟情，追着路过的淑柔问名字，甚至连脚下的路都没看清而掉进了河里，逗得淑柔也记住了他。</p>
+
+  <div class="deleted-scene">
+    <span class="label">删减情节</span>
+    木生从水里爬上来继续追淑柔，并捡了一朵木棉花，后来下南洋时将这朵花带在身边，在后来的那场大火中被烧掉了。
+  </div>
+
+  <h3>私奔成婚</h3>
+  <p>淑柔选择和木生私奔。她提的唯一要求是要一辆自行车。木生当时没钱，自己用木头做了一辆自行车，抱得美人归。两人随后养育了三个孩子，最小的还不会爬，被妈妈背在肩上。一家人过着幸福的日常生活。</p>
+
+  <h3>被迫下南洋</h3>
+  <p>约1945-1948年间，国民党抓壮丁（潮汕人称"胡琏掠兵"），为了活命，也为了能和淑柔再次团聚，木生选择下南洋。先去了马来西亚当苦力，三年后因义气出头得罪英国警察被赶出马来西亚，辗转去了泰国（暹罗）。</p>
+
+  <p>离开时，三个孩子中最小的刚会爬。此后数十年间，一封封侨批成为他们艰难岁月里的经济来源与精神支柱。</p>
+</section>
+
+<!-- ACT 3 -->
+<section class="act" id="act3">
+  <div class="act-number">第三幕</div>
+  <div class="act-title">木生在暹罗</div>
+  <div class="act-time">约1948—1960年 · 暹罗（泰国）</div>
+
+  <h3>初到暹罗，住进南枝家客栈</h3>
+  <p>木生在同乡的接济下住进南枝家开的小客栈。为了省钱，住的是柴房。</p>
+
+  <p><strong>谢南枝</strong>——客栈老板的女儿（"厝主走仔"），精明、泼辣、嘴上不饶人。她最讨厌别人用"厝主走仔"这个身份定义她。作为独生女，她不愿做"走仔"（嫁出去的女儿），想为父亲撑起门户。相亲只有一个要求：对方须入赘。但这吓走了很多人。</p>
+
+  <h3>南枝与木生的关系</h3>
+  <p>影片设置了"预期违背"——观众发现一男两女时，会猜测可能是三角恋，结果根本不是。两人互相看对方不顺眼，总是掐架。</p>
+
+  <div class="highlight-box">
+    <strong>导演明确设计：</strong>全片两个小时，木生从来没有喊过南枝的名字，因为他心中只有一个女人的名字，叫淑柔。两人之间是纯粹的情谊，并没有爱情或暧昧。
+  </div>
+
+  <h3>谢父的角色</h3>
+  <p>南枝的父亲表面上有酗酒等缺点，但在观念上非常开明。当陈家父子上门提亲，说"合过八字会生六个仔"时，南枝明确拒绝。谢父接过话头，调侃道："输过去娶只母猪，一窝可生十二个。"</p>
+  <p>南枝再次拒绝提亲婚事后，父亲喃喃说出："走仔也不是要走的仔。"表达了对女儿终身不嫁选择的尊重。</p>
+
+  <h3>侨批往来</h3>
+  <p>木生不识字，刚开始寄给淑柔的信都是请同乡狄功代笔。每一封信几乎都以"吾妻淑柔，展信安康"开头。</p>
+
+  <div class="qiaobi">
+    <p>吾妻淑柔，展信安康。</p>
+    <p>随信寄两百元，我一切无恙，生意昌顺。行船入夜，恰江上升明月，圆如玉坠，仿若身在故乡，似与你并肩共赏。</p>
+    <p>江海万里，心中念你，便不觉遥远。</p>
+    <p class="sign">夫 木生</p>
+  </div>
+
+  <div class="qiaobi">
+    <p>湄南河畔木棉花盛开，像极了家乡的春天。</p>
+    <p>压了一朵在信中，望你也能闻到花香。</p>
+    <p class="sign">夫 木生</p>
+  </div>
+
+  <div class="qiaobi">
+    <p>吾夫木生，展信佳。</p>
+    <p>七月初七，大妹出花园，已亭亭玉立。大弟和细弟亦个头出挑，健朗聪慧，见子女茁壮成长，欣慰非常。</p>
+    <p>七夕当夜，你衣锦归来，仍是少年模样。梦醒行至寨门前，闻溪水潺潺，方觉夜深。</p>
+    <p>念你安康，好梦即已知足。</p>
+    <p class="sign">妻 淑柔</p>
+  </div>
+
+  <h3>读信的喜剧桥段</h3>
+  <p>木生叫南枝帮忙念淑柔的信。不太识字的南枝把信里的"家里烤番薯"念成"家，里，大，火"。网友发现，南枝读错的字——"床、火、夜、死"——恰恰成为木生此后命运的写照。</p>
+
+  <h3>华文教育</h3>
+  <p>木生虽大字不识，但深知不识字的苦。他对南枝说："你不识字可以收一辈子租，那些孩子不识字就只能做一辈子牛马。"</p>
+
+  <p>他主动邀请帮忙写信的文化人狄功当孩子们的老师，教学地点在木生租住的柴房里。教孩子们学汉字、读唐诗——"人、口、手"三个最简单的字。当时泰国禁止华文教育，这是犯法行为。</p>
+
+  <p>先生在教到"红豆生南国，春来发几枝"时，用木生和淑柔的来往信件作为教学范例。南枝由此第一次了解了木生和妻子的感情，也暗示了南枝读书水平的精进。</p>
+
+  <div class="deleted-scene">
+    <span class="label">删减情节</span>
+    淑柔曾在信中劝木生再娶，木生让南枝替自己回信表明心意，被狄功听到，以为他向南枝表白，所以片头狄功说木生"勾"走了南枝。
+  </div>
+
+  <h3>一场大火——命运转折</h3>
+  <p>约1956年，印度人（开发商）看上了南枝家的旅馆，想逼他们以五万泰铢出卖。南枝父亲拒绝后，他们半夜纵火烧了旅馆。</p>
+
+  <p>木生在大火中放弃抢救自己攒了多年的积蓄，救出了喝醉酒的南枝父亲。积蓄全部化为灰烬——攒的一盒子钱被烧光时，他没哭。</p>
+
+  <p>木生在逃离大火过程中遇到纵火犯，和纵火犯大打出手，其中一个被打残。当地警察赶来，木生被逮捕。</p>
+
+  <h3>入狱两年</h3>
+  <p>木生被判入狱两年。入狱期间，南枝定期来探监，帮木生写信寄钱给老家的淑柔。这是南枝第一次代替木生写信——在窗前写信，打了很多草稿。（被她老爸拿去复用——这个细节呼应了"1978年那封被水冲走的信，为什么在泽华手里会有草稿"。）</p>
+
+  <div class="highlight-box">
+    <strong>木生在狱中唯一一次哭泣：</strong>他收到淑柔寄来的全家福照片，看到妻子艰难养活一家人，分不出哪个孩子最大哪个最小——走时孩儿尚在襁褓，此时个个相似——眼泪倏地落下。他说："淑柔一个人带三个孩子，得有多不容易。"<br><br>
+    打架流血不哭，积蓄一夜成空不哭，看到妻儿照片哭了。
+  </div>
+
+  <h3>南枝的困境</h3>
+  <p>客栈被烧后，南枝失去收入来源。她靠给人洗碗、洗衣服赚钱，工钱被克扣。住转个身都难的小房子。南枝父女另起炉灶，从头再来。</p>
+
+  <h3>木生出狱与跑船</h3>
+  <p>约1958年，木生出狱。因为在监狱里认识了贵人，不再拉人力车，改行去跑船。赚得风生水起，攒够了回家路费。</p>
+
+  <p>他劝同乡和他一起回去看看。同乡平静地说：</p>
+
+  <div class="highlight-box" style="border-left-color: var(--text-light); background: rgba(155,142,126,0.06);">
+    "我又不像你，家里没有人等我回家。"
+  </div>
+</section>
+
+<!-- ACT 4 -->
+<section class="act" id="act4">
+  <div class="act-number">第四幕</div>
+  <div class="act-title">木生之死</div>
+  <div class="act-time">约1960年 · 七夕夜 · 暹罗海上</div>
+
+  <p>木生在船上时，贼人抢劫隔壁船只。隔壁船只的妇人和小孩没有还手之力，哭天喊地。木生见义勇为，冲出去和歹徒搏斗。寡不敌众，被歹徒刺中身体要害部位，推下海里。木生殒命，尸骨无存。</p>
+
+  <div class="highlight-box">
+    <strong>影片对死亡的处理极为克制：</strong>镜头在船舱里透着窗户从右到左横移，落到了西装上，男主死亡的镜头不过是后景窗户里并不那么明显的落水。没有多给一秒镜头。
+  </div>
+
+  <p><strong>"水"的命运呼应：</strong>初遇时木生为了看淑柔掉进河里（喜），木生最终死于大海（悲），真相信后来因送信员落水而丢失（误会的起点）——水贯穿全片。</p>
+
+  <div class="divider">✦</div>
+
+  <p><strong>同一时刻的淑柔</strong>——淑柔在七夕夜梦见木生归来。在给他的信里写道：</p>
+
+  <div class="qiaobi">
+    <p>七夕当夜，你衣锦归来，仍是少年模样。</p>
+    <p>梦醒行至寨门前，闻溪水潺潺，方觉夜深。</p>
+    <p class="sign">算算时间，应是木生的头七。</p>
+  </div>
+</section>
+
+<!-- ACT 5 -->
+<section class="act" id="act5">
+  <div class="act-number">第五幕</div>
+  <div class="act-title">谢南枝的选择——十八年守护</div>
+  <div class="act-time">1960—1978年 · 暹罗</div>
+
+  <h3>决定隐瞒真相</h3>
+  <p>木生去世后，南枝写好了讣告，准备寄给淑柔。</p>
+
+  <p><strong>银信局的关键段落：</strong>南枝在银信局排队等候。她看到远在异乡的潮汕人相互托举、帮扶的情义：有跟木生一样给妻儿寄钱报平安的，有给家里寄钱让尽快赎出女儿的，有别人要先生在信里写"暹罗没有春天，你就是我的春天"的。</p>
+
+  <p>电影同时重放了之前木生每次寄信的场景——有时报平安，有时藏不住的思念，都寄予了木生和远方妻子之间重逢的希望。南枝看不到这些场景，但电影让它们与等着寄出讣告的南枝同时出现在观众眼前，代表南枝在心里感受木生的想法。</p>
+
+  <p>最终，南枝把讣告烧掉，换成了一封平安批。以木生口吻写下：</p>
+
+  <div class="qiaobi">
+    <p>行船入夜，恰江上升明月，圆如玉坠，仿若身在故乡，似与你并肩共赏。</p>
+    <p>江海万里，心中念你，便不觉遥远。</p>
+    <p class="sign">——南枝以木生之名</p>
+  </div>
+
+  <h3>十八年</h3>
+  <p>从1960年到1978年，整整18年，南枝以木生的名义继续给淑柔写信并寄钱，一力供养两个家庭：暹罗的家（老父亲和养子泽华）以及潮汕的家（淑柔和三个孩子）。</p>
+
+  <p><strong>南枝的寄送清单：</strong>定期寄钱、花占饼干（"罗滴"）、五花肉（抹上粗盐，粽叶裹好的咸猪肉）、布料新衣（淑柔儿子还笑言："爸爸买衣的眼光越来越好了"）、一辆真正的自行车——替木生补送给淑柔，全了她多年的念想。</p>
+
+  <p><strong>南枝的自我成长：</strong>她从目不识丁的"厝主走仔"，成长为教书育人的"谢先生"，接过木生和同乡们的华文教育事业。她收养了一个弃婴（泽华），亲自抚育培养。她盘起头发，选择"自梳"（宣誓终身不嫁、独身终老），终身未婚。</p>
+
+  <p><strong>信中的变化：</strong>南枝在1978年用于揭秘的信中写到："我也和你一样为人母，从你的信里教会了我为母则刚的责任……"信的内容越到后期越不像木生会说的话——"谁言女子之肩膀不够伟岸，为母则刚，恰似你的样子"——这些话的视角完全是一个女性在欣赏另一个女性。</p>
+
+  <div class="deleted-scene">
+    <span class="label">删减情节</span>
+    南枝在意识到自己得病时，趁清醒给淑柔写信说——"想到一句诗，西出阳关无故人。自从没了你的消息，我也就没有了故人。"导演受访时说这封信太刀人了，于是拿掉。
+  </div>
+
+  <h3>狄公的暗恋</h3>
+  <p>帮木生写信的教书先生狄功，实际上一直暗恋南枝。他一辈子单身。后来晓伟来泰国找到南枝时，狄功捶打晓伟，因为他觉得是木生"抢走了"南枝。他后来打听到南枝还活着，还想去健身，重新争取南枝的青睐。</p>
+
+  <p>狄公是全片唯一一个欲望被允许可见的男性。他的暗恋在电影中被喜剧化处理。</p>
+</section>
+
+<!-- ACT 6 -->
+<section class="act" id="act6">
+  <div class="act-number">第六幕</div>
+  <div class="act-title">误会——一张全家福</div>
+  <div class="act-time">1978年</div>
+
+  <p>18年过去，孩子们都长大成人。淑柔的信说要去泰国"看木生"，秘密就要藏不住了。南枝决定写信坦白真相，并找出唯一一张木生在泰国的照片一起寄给淑柔。</p>
+
+  <p><strong>南枝反复书写的坦白信：</strong>她写"尊敬的淑柔阿姐"，写"非常冒昧地自我介绍"，写"实在抱歉，这么多年来"，写"我自作主张，以木生兄的名"，写"怯懦，迟迟未能诉你实情"，写"对不起，淑柔阿姐"。</p>
+
+  <div class="deleted-scene">
+    <span class="label">删减情节</span>
+    南枝打算带着父亲和儿子、木生灵牌一起去汕头找淑柔。答应一起去的父亲，在这时对这个"终身未嫁、养着两家人"的女儿终于放心了，撒手而去。父亲去世让行程延后。南枝后来独自带儿子和木生灵牌回国找淑柔，却听说她家小儿子正摆酒办事。怕破坏淑柔的念想及喜气，于是返回暹罗，又寄回一千元。
+  </div>
+
+  <h3>大雨导致的误会</h3>
+  <p>溪头村的大雨，骑着单车的邮递员直接掉进河里。信件全部散落在水里。邮递员没找到写的信（坦白信），只找回了那张照片，专程送来给淑柔。</p>
+
+  <p>照片上是木生、南枝和几个在旅馆里学习的学生。淑柔不知道真相，误以为木生已经和图片里的女人在南洋组建了新家庭，有了很多孩子。</p>
+
+  <h3>淑柔的反应</h3>
+  <p>淑柔对木生的爱是赤诚的、深厚的，更是骄傲的、刚烈的。她知道过番后在南洋另行娶妻生子的番客大有人在，她能为木生忍受远隔重洋的思念之苦，却舍不得他为她苦守，可以接受他的"另娶"。但舍不得不代表甘愿"被辜负"。</p>
+
+  <p>淑柔轻笑一声"现在才告诉我"，直接搬家到其他地方，主动断绝和木生这边所有联系，不再回信，也不允许子女再与他联系。南枝后面一封封信都被退回了，误会失去了解除的机会。</p>
+</section>
+
+<!-- ACT 7 -->
+<section class="act" id="act7">
+  <div class="act-number">第七幕</div>
+  <div class="act-title">真相大白</div>
+  <div class="act-time">2018年 · 泰国</div>
+
+  <p>晓伟到泰国后，找到了木生的牌位，找到了当年帮木生写信的狄功，找到了南枝的养子泽华。泽华拿出了1978年那封坦白信的草稿（南枝写信打草稿的习惯前面已有交代），还原了所有真相。</p>
+
+  <p>晓伟得知：阿公木生1960年就已去世；从1960年到1978年，18年的信和钱都是南枝寄的；那张"全家福"不是木生的新家庭，而是中文班的师生留念；以"木生"命名的学校，是后来受惠的华侨们自发捐助、以木生名字命名的。</p>
+
+  <div class="highlight-box">
+    <strong>晓伟的成长：</strong>那个原本叫嚣着"没钱还就是没钱还，总不能叫我去死"的年轻人，面对阿嬷关于他债务情况的询问时，轻声说了句"慢慢还嘛"。
+  </div>
+</section>
+
+<!-- ACT 8 -->
+<section class="act" id="act8">
+  <div class="act-number">第八幕</div>
+  <div class="act-title">淑柔得知真相</div>
+  <div class="act-time">2018年 · 中国潮汕</div>
+
+  <p>晓伟通过视频电话告诉淑柔全部真相。泽华读出了1978年那封丢失的坦白信。</p>
+
+  <p><strong>淑柔的反应——全片最精妙的段落：</strong></p>
+
+  <p>淑柔没有痛哭流涕，也没有细数自己几十年来一个人养孩子持家的艰辛不易。她只是撑着伞去厨房看凉掉的橄榄菜。儿子搀着她打伞、走去厨房、处理橄榄，一长段缓慢、琐碎的日常镜头后，她才不疾不徐地说出自己早就做好的决定：要坐飞机去见南枝。</p>
+
+  <p>面对小儿子的困惑，她平静地说："你南枝姨不是在曼谷吗。"</p>
+
+  <div class="divider">✦</div>
+
+  <p>再次看向那张曾引发半生误会的合影时，没有怨恨，而是心疼地说——</p>
+
+  <div class="highlight-box" style="border-left-color: var(--accent-kapok);">
+    "一大群孩子，你走这么早，孩子们怎么办？"
+  </div>
+
+  <p>她以为照片上是木生的子女，担心的是南枝独自抚养这些孩子的辛苦。</p>
+</section>
+
+<!-- ACT 9 -->
+<section class="act" id="act9">
+  <div class="act-number">第九幕</div>
+  <div class="act-title">暮年重逢</div>
+  <div class="act-time">2018年 · 泰国曼谷</div>
+
+  <p>80多岁的淑柔第一次坐飞机，从潮州飞到泰国。她带来了亲手晒制的橄榄和橄榄菜。</p>
+
+  <p>进入南枝家时，导演停顿了一下，让观众一瞬间以为南枝已经不在了。但进门后看到的是满头白发的谢南枝，在很认真地晒木棉花。</p>
+
+  <p>南枝年事已高，已罹患阿尔茨海默症，大多时候已经不太记事。</p>
+
+  <p>淑柔给南枝塞了一颗从家乡带去的橄榄，告诉她"先苦后甘"。南枝递给淑柔一朵木棉花。</p>
+
+  <div class="divider">✦</div>
+
+  <p>南枝难得清醒的一刻——</p>
+
+  <div class="qiaobi" style="text-align: center; border-color: var(--accent-kapok);">
+    <p>"你是淑柔。"</p>
+    <p>"寄你的咸猪肉收到了吗？"</p>
+    <p>"收到了，好吃。"</p>
+    <p>"好吃，那我再给你寄。"</p>
+  </div>
+
+  <p>两个坚韧的女人、持家的女人、独自咬牙走过许多艰难时刻的女人，以为见面会有多么煽情的高潮，她们却只是微笑着闲话家常。两个老人拥抱。淑柔拿出手机自拍两人合影。</p>
+
+  <div class="divider">✦</div>
+
+  <h3>结尾</h3>
+  <p>影片最后一个镜头回到了过去。导演说——</p>
+
+  <div class="qiaobi" style="border-color: var(--accent-gold);">
+    <p>"当夕阳的光照在泰国街头，把一切都染上了很亮的色彩，年老的淑柔在车里看到当年的南枝。"</p>
+    <p>"木生买了布正准备走，南枝站在书摊边正在等待三轮车回家。"</p>
+    <p>"那个时候，南枝青春淡雅，她还不认识郑木生。"</p>
+    <p class="sign" style="text-align: center; font-size: 1rem; color: var(--text-primary);">一切尚未开始，一切已然注定。</p>
+  </div>
+</section>
+
+<!-- APPENDIX 1 -->
+<section class="appendix" id="appendix1">
+  <div class="appendix-title">附录一 · 关键意象与细节网络</div>
+
+  <div class="symbol-grid">
+    <div class="symbol-card">
+      <span class="icon">🌳</span>
+      <h4>三个名字</h4>
+      <p>郑<strong>木</strong>生、<strong>叶</strong>淑柔、谢南<strong>枝</strong>。木与叶之间，枝蔓牵绕。木生是连接她们的那棵已经不在的树。</p>
+    </div>
+    <div class="symbol-card">
+      <span class="icon">💧</span>
+      <h4>"水"的呼应</h4>
+      <p>初遇掉进河里（喜）、死于大海（悲）、送信员落水致信丢失（误会）。水贯穿全片命运走向。</p>
+    </div>
+    <div class="symbol-card">
+      <span class="icon">🫒</span>
+      <h4>橄榄</h4>
+      <p>"先苦后甘"，淑柔的象征。淑柔在潮汕守着橄榄树，最后带着橄榄菜飞赴泰国。</p>
+    </div>
+    <div class="symbol-card">
+      <span class="icon">🌺</span>
+      <h4>木棉花</h4>
+      <p>暹罗的春天，南枝的象征。南枝晚年每天在晒木棉花。两人见面时交换各自的象征物。</p>
+    </div>
+    <div class="symbol-card">
+      <span class="icon">✉️</span>
+      <h4>侨批</h4>
+      <p>半文半白，带有中国古典审美。全片通过侨批的朗读推动叙事，是连接海内外的核心纽带。</p>
+    </div>
+    <div class="symbol-card">
+      <span class="icon">📖</span>
+      <h4>淑柔识字</h4>
+      <p>淑柔地主出身但不识字，老年却能自己读信。可见漫长岁月里她无数次看信，字都记下来了。</p>
+    </div>
+  </div>
+</section>
+
+<!-- APPENDIX 2 -->
+<section class="appendix" id="appendix2">
+  <div class="appendix-title">附录二 · 被删减的情节</div>
+
+  <ol class="deleted-list">
+    <li><strong>木棉花：</strong>木生初识淑柔落水后捡了木棉花，下南洋时带在身边，被火烧掉了。</li>
+    <li><strong>淑柔劝木生再娶：</strong>淑柔曾在信中劝木生再娶，木生让南枝替自己回信表明心意，被狄功听到，以为他向南枝表白。</li>
+    <li><strong>南枝回国未果：</strong>南枝带儿子和木生灵牌回国找淑柔，却听说她家小儿子正摆酒办事。怕破坏淑柔的念想及喜气，返回暹罗，又寄回一千元。</li>
+    <li><strong>南枝的告别信：</strong>南枝意识到自己得病，趁清醒给淑柔写信——"想到一句诗，西出阳关无故人。自从没了你的消息，我也就没有了故人。"导演说太刀人了，拿掉。</li>
+    <li><strong>玉娇龙剧中剧：</strong>南枝在信里告诉淑柔东南亚很红一出潮剧《玉娇龙》，侠女跟淑柔一模一样。淑柔回信傲娇说自己被喊作玉娇龙不脸红。作为两人人格的映射。因电影超两个半小时，忍痛删掉。</li>
+  </ol>
+</section>
+
+<!-- APPENDIX 3 -->
+<section class="appendix" id="appendix3">
+  <div class="appendix-title">附录三 · 创作背景</div>
+
+  <p>导演蓝鸿春是土生土长的汕头人，本片是他的第三部电影，构成"潮汕家庭三部曲"（前两部为《爸，我一定行的》《带你去见我妈》）。</p>
+
+  <p>故事来自2019年拍摄纪录片《四海潮味》时，在马来西亚、泰国、越南、印尼等国采访数百个海外华人家庭听到的故事。</p>
+
+  <p>导演说电影的架构来自一个真实故事：男人下南洋另娶，死后二房继续给丈夫老家妻子寄钱寄物，最后两家人见面。导演把角色改了，将性缘叙事调整为无关男女之情。</p>
+
+  <p>全片使用素人演员，前期筹备70%以上时间在选角，前后花了近9个月。导演甚至测了演员的MBTI，要求和角色100%贴合——INTJ：既内敛，又坚韧。</p>
+</section>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="closing-quote">
+    那个时候，南枝青春淡雅，<br>
+    她还不认识郑木生。
+  </div>
+  <p>《给阿嬷的情书》完整剧情梳理 · 基于多方素材整合</p>
+  <p style="margin-top: 0.5rem; opacity: 0.6;">2026年5月</p>
+</footer>
+
+</body>
+</html>
